@@ -329,18 +329,17 @@
   /* Phase headers stay dark in both modes (Berghain identity) — already styled above */
 
   /* ===================================================================
-     🍁 FUNKY FAMILY FUN THEME — overrides the techno-flyer styling above.
-     Bright candy palette, rounded display type, soft colorful shadows.
-     (Loaded last so these rules win over the earlier !important block.)
+     🍁 RED & WHITE THEME — Canadian-flag palette, fun + rounded.
+     Overrides the techno-flyer styling above (loaded last so it wins).
      =================================================================== */
 
-  /* Backdrop: cheerful pastel gradient; kill the noise + scanline overlays. */
-  html { background: #fff7f0 !important; }
-  html.dark { background: #14112b !important; }
-  #lavaLamp { background: linear-gradient(165deg,#ffe7d3 0%,#ffd6e8 34%,#d8ecff 68%,#e6fbec 100%) !important; }
-  html.dark #lavaLamp { background: radial-gradient(ellipse at 50% 18%, #2a1d4d 0%, #14112b 78%) !important; }
-  body { background: transparent !important; color: #2b2240 !important; font-size: 15px; }
-  .dark body { color: #f3efff !important; }
+  /* Backdrop: clean white → soft red; kill the noise + scanline overlays. */
+  html { background: #fffafa !important; }
+  html.dark { background: #1a0807 !important; }
+  #lavaLamp { background: linear-gradient(170deg,#ffffff 0%,#fff2f1 45%,#ffdedb 100%) !important; }
+  html.dark #lavaLamp { background: radial-gradient(ellipse at 50% 18%, #3a0e0a 0%, #1a0807 78%) !important; }
+  body { background: transparent !important; color: #2a1412 !important; font-size: 15px; }
+  .dark body { color: #ffece9 !important; }
   body::before, body::after { display: none !important; }
   .lava-blob, #lavaStage { display: none !important; }
 
@@ -360,75 +359,75 @@
   [class*="rounded-md"]  { border-radius: 10px !important; }
   .pill { border-radius: 999px !important; }
 
-  /* Cards: white with a soft violet shadow. */
-  .bg-white, .dark\:bg-slate-900 { background: #ffffff !important; color: #2b2240 !important; box-shadow: 0 10px 30px -16px rgba(124,92,255,0.40) !important; }
-  html:not(.dark) .bg-white, html:not(.dark) .dark\:bg-slate-900 { background: #ffffff !important; color: #2b2240 !important; }
-  .dark .bg-white, .dark .dark\:bg-slate-900 { background: #221a44 !important; color: #f3efff !important; box-shadow: 0 10px 30px -18px rgba(0,0,0,0.6) !important; }
+  /* Cards: white with a soft red shadow. */
+  .bg-white, .dark\:bg-slate-900 { background: #ffffff !important; color: #2a1412 !important; box-shadow: 0 10px 30px -16px rgba(213,43,30,0.32) !important; }
+  html:not(.dark) .bg-white, html:not(.dark) .dark\:bg-slate-900 { background: #ffffff !important; color: #2a1412 !important; }
+  .dark .bg-white, .dark .dark\:bg-slate-900 { background: #2a1513 !important; color: #ffece9 !important; box-shadow: 0 10px 30px -18px rgba(0,0,0,0.6) !important; }
   .bg-stone-50, .bg-stone-100 { background: transparent !important; }
-  html:not(.dark) .bg-stone-50, html:not(.dark) .bg-stone-100 { background: #fff2e8 !important; color: #2b2240 !important; }
-  .dark .dark\:bg-slate-800 { background: #2a2152 !important; }
-  .dark .dark\:bg-slate-950 { background: #14112b !important; }
+  html:not(.dark) .bg-stone-50, html:not(.dark) .bg-stone-100 { background: #fff2f1 !important; color: #2a1412 !important; }
+  .dark .dark\:bg-slate-800 { background: #34201d !important; }
+  .dark .dark\:bg-slate-950 { background: #1a0807 !important; }
 
-  /* Soft borders. */
-  [class*="border-slate-200"],[class*="border-slate-300"],[class*="border-slate-700"],[class*="border-slate-800"] { border-color: rgba(124,92,255,0.20) !important; }
-  html:not(.dark) [class*="border-slate-200"], html:not(.dark) [class*="border-slate-300"] { border-color: rgba(43,34,64,0.10) !important; }
+  /* Soft red borders. */
+  [class*="border-slate-200"],[class*="border-slate-300"],[class*="border-slate-700"],[class*="border-slate-800"] { border-color: rgba(213,43,30,0.20) !important; }
+  html:not(.dark) [class*="border-slate-200"], html:not(.dark) [class*="border-slate-300"] { border-color: rgba(42,20,18,0.10) !important; }
 
   /* Generic glass bars (e.g. the day-nav strip): soft + translucent so pills pop. */
-  .glass, html:not(.dark) .glass { backdrop-filter: blur(10px) !important; background: rgba(255,240,232,0.85) !important; border-bottom: 1px solid rgba(255,109,107,0.22) !important; color: #2b2240 !important; }
-  .dark .glass { background: rgba(20,17,43,0.80) !important; border-bottom: 1px solid #3e3270 !important; color: #f3efff !important; }
-  /* Top header bar only: bright candy gradient with white text. */
-  header.glass, html:not(.dark) header.glass { background: linear-gradient(95deg,#ff6b6b 0%,#ff4d97 48%,#7c5cff 100%) !important; border-bottom: none !important; box-shadow: 0 8px 22px -12px rgba(124,92,255,0.55) !important; color: #fff !important; }
+  .glass, html:not(.dark) .glass { backdrop-filter: blur(10px) !important; background: rgba(255,245,244,0.85) !important; border-bottom: 1px solid rgba(213,43,30,0.18) !important; color: #2a1412 !important; }
+  .dark .glass { background: rgba(26,8,7,0.82) !important; border-bottom: 1px solid #5a2620 !important; color: #ffece9 !important; }
+  /* Top header bar only: bold flag-red gradient with white text. */
+  header.glass, html:not(.dark) header.glass { background: linear-gradient(120deg,#e1352b 0%,#b3201a 100%) !important; border-bottom: none !important; box-shadow: 0 8px 22px -12px rgba(213,43,30,0.5) !important; color: #fff !important; }
   header.glass h1 { color: #fff !important; }
   header.glass #clocks { color: rgba(255,255,255,0.9) !important; }
 
-  /* Phase headers: bright rounded gradient banners. */
+  /* Phase headers: red banners with a white flag-stripe edge. */
   .phase-montreal, .phase-quebec, .phase-departure {
-    border-radius: 22px !important; border: none !important; padding: 22px 22px !important;
-    color: #fff !important; overflow: hidden; box-shadow: 0 14px 30px -16px rgba(0,0,0,0.35) !important;
+    border-radius: 22px !important; border: none !important; border-left: 10px solid rgba(255,255,255,0.92) !important;
+    padding: 22px 22px !important; color: #fff !important; overflow: hidden; box-shadow: 0 14px 30px -16px rgba(0,0,0,0.35) !important;
   }
-  .phase-montreal { background: linear-gradient(125deg,#ff7a5c 0%,#ff3d77 100%) !important; }
-  .phase-quebec   { background: linear-gradient(125deg,#2ec4b6 0%,#3a86ff 100%) !important; }
-  .phase-departure{ background: linear-gradient(125deg,#9b6bff 0%,#6a5cff 100%) !important; }
+  .phase-montreal { background: linear-gradient(125deg,#e63329 0%,#c41f17 100%) !important; }
+  .phase-quebec   { background: linear-gradient(125deg,#c41f17 0%,#8c1410 100%) !important; }
+  .phase-departure{ background: linear-gradient(125deg,#7a1510 0%,#3a0c0a 100%) !important; }
   .phase-montreal::after, .phase-quebec::after, .phase-departure::after { display: none !important; }
   .phase-montreal .serif, .phase-quebec .serif, .phase-departure .serif { color: #fff !important; font-size: 1.6em !important; }
 
-  /* Day-nav pills: rounded, candy active state. */
-  .dayNavBtn, html:not(.dark) .dayNavBtn { background: #ffffff !important; color: #2b2240 !important; border: 2px solid #ffd6e0 !important; border-radius: 999px !important; padding: 8px 16px !important; }
-  .dark .dayNavBtn { background: #2a2152 !important; color: #f3efff !important; border-color: #3e3270 !important; }
-  .dayNavBtn.ring-2, html:not(.dark) .dayNavBtn.ring-2 { background: linear-gradient(120deg,#ff6b6b,#ff4d97) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 8px 18px -8px rgba(255,77,151,0.6) !important; }
+  /* Day-nav pills: rounded, red active state. */
+  .dayNavBtn, html:not(.dark) .dayNavBtn { background: #ffffff !important; color: #2a1412 !important; border: 2px solid #ffd0cc !important; border-radius: 999px !important; padding: 8px 16px !important; }
+  .dark .dayNavBtn { background: #2a1513 !important; color: #ffece9 !important; border-color: #5a2620 !important; }
+  .dayNavBtn.ring-2, html:not(.dark) .dayNavBtn.ring-2 { background: linear-gradient(120deg,#e1352b,#b3201a) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 8px 18px -8px rgba(213,43,30,0.5) !important; }
 
   /* Generic pills. */
-  .pill, html:not(.dark) .pill { background: #ffe3ec !important; color: #d6336c !important; border: 2px solid transparent !important; }
-  .dark .pill { background: #2f2360 !important; color: #ffb3d1 !important; }
-  .pill.bg-slate-900, html:not(.dark) .pill.bg-slate-900 { background: linear-gradient(120deg,#7c5cff,#ff4d97) !important; color: #fff !important; border-color: transparent !important; }
+  .pill, html:not(.dark) .pill { background: #ffe1de !important; color: #c41f17 !important; border: 2px solid transparent !important; }
+  .dark .pill { background: #3a1714 !important; color: #ff9b91 !important; }
+  .pill.bg-slate-900, html:not(.dark) .pill.bg-slate-900 { background: linear-gradient(120deg,#e1352b,#b3201a) !important; color: #fff !important; border-color: transparent !important; }
 
   /* Bottom tab bar. */
-  #tabBar, html:not(.dark) #tabBar { backdrop-filter: blur(10px) !important; background: rgba(255,255,255,0.93) !important; border-top: 2px solid #ffe0ea !important; box-shadow: 0 -6px 20px -12px rgba(124,92,255,0.4) !important; }
-  .dark #tabBar { background: rgba(20,17,43,0.93) !important; border-top: 2px solid #3e3270 !important; }
-  .tab, html:not(.dark) .tab { color: #9a90c0 !important; }
-  .tab-active, html:not(.dark) .tab-active { color: #ff4d97 !important; }
+  #tabBar, html:not(.dark) #tabBar { backdrop-filter: blur(10px) !important; background: rgba(255,255,255,0.94) !important; border-top: 2px solid #ffd6d2 !important; box-shadow: 0 -6px 20px -12px rgba(213,43,30,0.4) !important; }
+  .dark #tabBar { background: rgba(26,8,7,0.94) !important; border-top: 2px solid #5a2620 !important; }
+  .tab, html:not(.dark) .tab { color: #bf8d88 !important; }
+  .tab-active, html:not(.dark) .tab-active { color: #d52b1e !important; }
 
   /* Ask-Claude floating pill. */
-  #claudePill, html:not(.dark) #claudePill { background: linear-gradient(120deg,#7c5cff,#ff4d97) !important; color: #fff !important; border: none !important; border-radius: 999px !important; font-family: 'Fredoka',sans-serif !important; letter-spacing: 0 !important; box-shadow: 0 12px 26px -8px rgba(124,92,255,0.7) !important; }
+  #claudePill, html:not(.dark) #claudePill { background: linear-gradient(120deg,#e1352b,#b3201a) !important; color: #fff !important; border: none !important; border-radius: 999px !important; font-family: 'Fredoka',sans-serif !important; letter-spacing: 0 !important; box-shadow: 0 12px 26px -8px rgba(213,43,30,0.6) !important; }
 
-  /* Tip cards: rounded with a bright accent edge. */
+  /* Tip cards: rounded with a red accent edge. */
   .tip-treats, .tip-hands-on, .tip-shopping { border-top: 0 !important; border-left: 6px solid #ccc !important; border-radius: 16px !important; padding: 14px 16px !important; }
-  .tip-treats,   html:not(.dark) .tip-treats   { background: #ffffff !important; border-left-color: #ff8c42 !important; border-top: 0 !important; }
-  .tip-hands-on, html:not(.dark) .tip-hands-on { background: #ffffff !important; border-left-color: #2ec4b6 !important; border-top: 0 !important; }
-  .tip-shopping, html:not(.dark) .tip-shopping { background: #ffffff !important; border-left-color: #ff4d97 !important; border-top: 0 !important; }
-  .dark .tip-treats { background:#221a44 !important; } .dark .tip-hands-on { background:#221a44 !important; } .dark .tip-shopping { background:#221a44 !important; }
+  .tip-treats,   html:not(.dark) .tip-treats   { background: #ffffff !important; border-left-color: #e0382c !important; border-top: 0 !important; }
+  .tip-hands-on, html:not(.dark) .tip-hands-on { background: #ffffff !important; border-left-color: #a01e15 !important; border-top: 0 !important; }
+  .tip-shopping, html:not(.dark) .tip-shopping { background: #ffffff !important; border-left-color: #ff5a4d !important; border-top: 0 !important; }
+  .dark .tip-treats { background:#2a1513 !important; } .dark .tip-hands-on { background:#2a1513 !important; } .dark .tip-shopping { background:#2a1513 !important; }
 
-  /* Highlighted place names: soft highlighter, not all-caps. */
-  .place-mention, html:not(.dark) .place-mention { background: #fff1a8 !important; color: #7a4f00 !important; border-radius: 6px !important; padding: 0 5px !important; text-transform: none !important; font-family: inherit !important; letter-spacing: 0 !important; text-decoration: none !important; font-weight: 700 !important; }
-  .dark .place-mention { background: #4a3d12 !important; color: #ffe08a !important; }
+  /* Highlighted place names: soft red highlighter, not all-caps. */
+  .place-mention, html:not(.dark) .place-mention { background: #ffd9d6 !important; color: #a01e15 !important; border-radius: 6px !important; padding: 0 5px !important; text-transform: none !important; font-family: inherit !important; letter-spacing: 0 !important; text-decoration: none !important; font-weight: 700 !important; }
+  .dark .place-mention { background: #3a1714 !important; color: #ff9b91 !important; }
 
   /* Inline notes. */
-  .inline-note, html:not(.dark) .inline-note { background: #fff7d6 !important; border-left: 5px solid #ff4d97 !important; color: #5a4a00 !important; border-radius: 14px !important; }
-  .dark .inline-note { background: #2a2152 !important; color: #ffe9a8 !important; border-left-color: #ff7eb6 !important; }
+  .inline-note, html:not(.dark) .inline-note { background: #fff2f1 !important; border-left: 5px solid #d52b1e !important; color: #7a2018 !important; border-radius: 14px !important; }
+  .dark .inline-note { background: #2a1513 !important; color: #ffd6d2 !important; border-left-color: #ff8a80 !important; }
 
-  /* Progress bar: rainbow fill. */
-  .progress-bar, html:not(.dark) .progress-bar { background: rgba(124,92,255,0.15) !important; height: 8px !important; border-radius: 999px !important; }
-  .progress-fill, html:not(.dark) .progress-fill { background: linear-gradient(90deg,#ff6b6b,#ff4d97,#7c5cff) !important; }
+  /* Progress bar: red fill. */
+  .progress-bar, html:not(.dark) .progress-bar { background: rgba(213,43,30,0.15) !important; height: 8px !important; border-radius: 999px !important; }
+  .progress-fill, html:not(.dark) .progress-fill { background: linear-gradient(90deg,#ff5a4d,#d52b1e,#a01e15) !important; }
 
   /* Header font-size slider: white on the gradient. */
   .font-scale-slider::-webkit-slider-runnable-track, html:not(.dark) .font-scale-slider::-webkit-slider-runnable-track { background: rgba(255,255,255,0.55) !important; height: 4px !important; border-radius: 999px !important; }
