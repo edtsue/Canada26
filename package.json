@@ -1,0 +1,12 @@
+{
+  "name": "canada26",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Montréal & Québec City family trip hub — Jun 20-25, 2026",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.65.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

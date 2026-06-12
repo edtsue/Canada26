@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="German flag">
+  <rect width="180" height="60" y="0" fill="#000000"/>
+  <rect width="180" height="60" y="60" fill="#DD0000"/>
+  <rect width="180" height="60" y="120" fill="#FFCE00"/>
+</svg>

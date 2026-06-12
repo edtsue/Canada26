@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/tips.js": {
+      "memory": 512,
+      "maxDuration": 30
+    },
+    "api/replan.js": {
+      "memory": 512,
+      "maxDuration": 60
+    },
+    "api/ask.js": {
+      "memory": 512,
+      "maxDuration": 30
+    },
+    "api/gate.js": {
+      "memory": 256,
+      "maxDuration": 10
+    }
+  }
+}

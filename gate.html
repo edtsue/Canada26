@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0f172a" />
+<title>Canada26 · Locked</title>
+<link rel="icon" type="image/svg+xml" href="/icon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style> html, body { font-family: 'Roboto', system-ui, sans-serif; } </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+<div class="max-w-sm w-full rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-2xl">
+  <div class="text-center mb-5">
+    <div class="text-3xl mb-2">🔒</div>
+    <h1 class="text-xl font-bold leading-tight">Montréal → Québec City</h1>
+    <div class="text-xs text-slate-400 mt-1">Trip planner · password required</div>
+  </div>
+  <form id="gateForm" class="space-y-3">
+    <input id="gatePass" type="password" required autocomplete="current-password" inputmode="text"
+      class="w-full rounded-xl border border-slate-700 bg-slate-950 p-3 text-base focus:outline-none focus:ring-2 focus:ring-yellow-400"
+      placeholder="Password" autofocus />
+    <label class="flex items-center gap-2 text-sm select-none">
+      <input id="gateRemember" type="checkbox" class="rounded accent-yellow-400" /> Remember me for 14 days
+    </label>
+    <button type="submit" id="gateSubmit" class="w-full rounded-xl bg-yellow-400 text-slate-900 font-medium py-3 hover:bg-yellow-300 transition">Unlock</button>
+    <div id="gateError" class="text-xs text-rose-400 text-center min-h-[16px]"></div>
+  </form>
+</div>
+
+<script>
+const form = document.getElementById("gateForm");
+const passInput = document.getElementById("gatePass");
+const rememberInput = document.getElementById("gateRemember");
+const btn = document.getElementById("gateSubmit");
+const err = document.getElementById("gateError");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  err.textContent = "";
+  btn.disabled = true;
+  btn.textContent = "Unlocking…";
+  try {
+    const r = await fetch("/api/gate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: passInput.value, remember: rememberInput.checked }),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!j.ok) {
+      err.textContent = r.status === 429
+        ? "Too many attempts. Wait a few minutes."
+        : r.status === 500
+        ? "Gate isn't configured on the server."
+        : "Wrong password.";
+      btn.disabled = false;
+      btn.textContent = "Unlock";
+      passInput.select();
+      return;
+    }
+    // Cookie set server-side; navigate home.
+    window.location.href = "/";
+  } catch (ex) {
+    err.textContent = "Network error: " + ex.message;
+    btn.disabled = false;
+    btn.textContent = "Unlock";
+  }
+});
+</script>
+
+</body>
+</html>
