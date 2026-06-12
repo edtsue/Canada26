@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#0f172a" />
+<meta name="theme-color" content="#ff6b6b" />
 <title>Montréal → Québec City · Family Trip Hub</title>
 <link rel="icon" type="image/svg+xml" href="/icon.svg" />
 <link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="DEsolo26" />
+<meta name="apple-mobile-web-app-title" content="Canada26" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
@@ -23,8 +23,8 @@
     theme: {
       extend: {
         fontFamily: {
-          serif: ['Roboto', 'system-ui', 'sans-serif'],
-          sans: ['Roboto', 'system-ui', 'sans-serif'],
+          serif: ['Fredoka', 'Nunito', 'system-ui', 'sans-serif'],
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
         },
         colors: {
           montreal:  { bg: '#9f1239', accent: '#fb7185', soft: '#ffe4e6' },
@@ -36,8 +36,8 @@
   };
 </script>
 <style>
-  html, body { font-family: 'Roboto', system-ui, sans-serif; }
-  h1, h2, h3, .serif { font-family: 'Roboto', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.01em; }
+  html, body { font-family: 'Nunito', system-ui, sans-serif; }
+  h1, h2, h3, .serif { font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.01em; }
   /* Highlighted place names inside AM/PM prose — clickable Google Maps links */
   .place-mention { color: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: rgba(250, 204, 21, 0.7); font-weight: 500; cursor: pointer; }
   .place-mention:hover { text-decoration-color: rgba(250, 204, 21, 1); }
@@ -327,6 +327,118 @@
   }
   html:not(.dark) .lava-blob { mix-blend-mode: multiply; opacity: 0.18; }
   /* Phase headers stay dark in both modes (Berghain identity) — already styled above */
+
+  /* ===================================================================
+     🍁 FUNKY FAMILY FUN THEME — overrides the techno-flyer styling above.
+     Bright candy palette, rounded display type, soft colorful shadows.
+     (Loaded last so these rules win over the earlier !important block.)
+     =================================================================== */
+
+  /* Backdrop: cheerful pastel gradient; kill the noise + scanline overlays. */
+  html { background: #fff7f0 !important; }
+  html.dark { background: #14112b !important; }
+  #lavaLamp { background: linear-gradient(165deg,#ffe7d3 0%,#ffd6e8 34%,#d8ecff 68%,#e6fbec 100%) !important; }
+  html.dark #lavaLamp { background: radial-gradient(ellipse at 50% 18%, #2a1d4d 0%, #14112b 78%) !important; }
+  body { background: transparent !important; color: #2b2240 !important; font-size: 15px; }
+  .dark body { color: #f3efff !important; }
+  body::before, body::after { display: none !important; }
+  .lava-blob, #lavaStage { display: none !important; }
+
+  /* Friendly rounded type. */
+  html, body { font-family: 'Nunito','Segoe UI',system-ui,sans-serif !important; }
+  h1, h2, h3, .serif, .dayNavBtn, .pill {
+    font-family: 'Fredoka','Nunito',sans-serif !important;
+    text-transform: none !important; letter-spacing: 0 !important; font-weight: 600 !important;
+  }
+  h1, h2 { font-weight: 700 !important; letter-spacing: -0.01em !important; }
+  #clocks { font-family: 'Nunito',ui-monospace,monospace !important; font-weight: 700; }
+
+  /* Bring back generous rounded corners. */
+  [class*="rounded-2xl"] { border-radius: 24px !important; }
+  [class*="rounded-xl"]  { border-radius: 18px !important; }
+  [class*="rounded-lg"]  { border-radius: 14px !important; }
+  [class*="rounded-md"]  { border-radius: 10px !important; }
+  .pill { border-radius: 999px !important; }
+
+  /* Cards: white with a soft violet shadow. */
+  .bg-white, .dark\:bg-slate-900 { background: #ffffff !important; color: #2b2240 !important; box-shadow: 0 10px 30px -16px rgba(124,92,255,0.40) !important; }
+  html:not(.dark) .bg-white, html:not(.dark) .dark\:bg-slate-900 { background: #ffffff !important; color: #2b2240 !important; }
+  .dark .bg-white, .dark .dark\:bg-slate-900 { background: #221a44 !important; color: #f3efff !important; box-shadow: 0 10px 30px -18px rgba(0,0,0,0.6) !important; }
+  .bg-stone-50, .bg-stone-100 { background: transparent !important; }
+  html:not(.dark) .bg-stone-50, html:not(.dark) .bg-stone-100 { background: #fff2e8 !important; color: #2b2240 !important; }
+  .dark .dark\:bg-slate-800 { background: #2a2152 !important; }
+  .dark .dark\:bg-slate-950 { background: #14112b !important; }
+
+  /* Soft borders. */
+  [class*="border-slate-200"],[class*="border-slate-300"],[class*="border-slate-700"],[class*="border-slate-800"] { border-color: rgba(124,92,255,0.20) !important; }
+  html:not(.dark) [class*="border-slate-200"], html:not(.dark) [class*="border-slate-300"] { border-color: rgba(43,34,64,0.10) !important; }
+
+  /* Generic glass bars (e.g. the day-nav strip): soft + translucent so pills pop. */
+  .glass, html:not(.dark) .glass { backdrop-filter: blur(10px) !important; background: rgba(255,240,232,0.85) !important; border-bottom: 1px solid rgba(255,109,107,0.22) !important; color: #2b2240 !important; }
+  .dark .glass { background: rgba(20,17,43,0.80) !important; border-bottom: 1px solid #3e3270 !important; color: #f3efff !important; }
+  /* Top header bar only: bright candy gradient with white text. */
+  header.glass, html:not(.dark) header.glass { background: linear-gradient(95deg,#ff6b6b 0%,#ff4d97 48%,#7c5cff 100%) !important; border-bottom: none !important; box-shadow: 0 8px 22px -12px rgba(124,92,255,0.55) !important; color: #fff !important; }
+  header.glass h1 { color: #fff !important; }
+  header.glass #clocks { color: rgba(255,255,255,0.9) !important; }
+
+  /* Phase headers: bright rounded gradient banners. */
+  .phase-montreal, .phase-quebec, .phase-departure {
+    border-radius: 22px !important; border: none !important; padding: 22px 22px !important;
+    color: #fff !important; overflow: hidden; box-shadow: 0 14px 30px -16px rgba(0,0,0,0.35) !important;
+  }
+  .phase-montreal { background: linear-gradient(125deg,#ff7a5c 0%,#ff3d77 100%) !important; }
+  .phase-quebec   { background: linear-gradient(125deg,#2ec4b6 0%,#3a86ff 100%) !important; }
+  .phase-departure{ background: linear-gradient(125deg,#9b6bff 0%,#6a5cff 100%) !important; }
+  .phase-montreal::after, .phase-quebec::after, .phase-departure::after { display: none !important; }
+  .phase-montreal .serif, .phase-quebec .serif, .phase-departure .serif { color: #fff !important; font-size: 1.6em !important; }
+
+  /* Day-nav pills: rounded, candy active state. */
+  .dayNavBtn, html:not(.dark) .dayNavBtn { background: #ffffff !important; color: #2b2240 !important; border: 2px solid #ffd6e0 !important; border-radius: 999px !important; padding: 8px 16px !important; }
+  .dark .dayNavBtn { background: #2a2152 !important; color: #f3efff !important; border-color: #3e3270 !important; }
+  .dayNavBtn.ring-2, html:not(.dark) .dayNavBtn.ring-2 { background: linear-gradient(120deg,#ff6b6b,#ff4d97) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 8px 18px -8px rgba(255,77,151,0.6) !important; }
+
+  /* Generic pills. */
+  .pill, html:not(.dark) .pill { background: #ffe3ec !important; color: #d6336c !important; border: 2px solid transparent !important; }
+  .dark .pill { background: #2f2360 !important; color: #ffb3d1 !important; }
+  .pill.bg-slate-900, html:not(.dark) .pill.bg-slate-900 { background: linear-gradient(120deg,#7c5cff,#ff4d97) !important; color: #fff !important; border-color: transparent !important; }
+
+  /* Bottom tab bar. */
+  #tabBar, html:not(.dark) #tabBar { backdrop-filter: blur(10px) !important; background: rgba(255,255,255,0.93) !important; border-top: 2px solid #ffe0ea !important; box-shadow: 0 -6px 20px -12px rgba(124,92,255,0.4) !important; }
+  .dark #tabBar { background: rgba(20,17,43,0.93) !important; border-top: 2px solid #3e3270 !important; }
+  .tab, html:not(.dark) .tab { color: #9a90c0 !important; }
+  .tab-active, html:not(.dark) .tab-active { color: #ff4d97 !important; }
+
+  /* Ask-Claude floating pill. */
+  #claudePill, html:not(.dark) #claudePill { background: linear-gradient(120deg,#7c5cff,#ff4d97) !important; color: #fff !important; border: none !important; border-radius: 999px !important; font-family: 'Fredoka',sans-serif !important; letter-spacing: 0 !important; box-shadow: 0 12px 26px -8px rgba(124,92,255,0.7) !important; }
+
+  /* Tip cards: rounded with a bright accent edge. */
+  .tip-treats, .tip-hands-on, .tip-shopping { border-top: 0 !important; border-left: 6px solid #ccc !important; border-radius: 16px !important; padding: 14px 16px !important; }
+  .tip-treats,   html:not(.dark) .tip-treats   { background: #ffffff !important; border-left-color: #ff8c42 !important; border-top: 0 !important; }
+  .tip-hands-on, html:not(.dark) .tip-hands-on { background: #ffffff !important; border-left-color: #2ec4b6 !important; border-top: 0 !important; }
+  .tip-shopping, html:not(.dark) .tip-shopping { background: #ffffff !important; border-left-color: #ff4d97 !important; border-top: 0 !important; }
+  .dark .tip-treats { background:#221a44 !important; } .dark .tip-hands-on { background:#221a44 !important; } .dark .tip-shopping { background:#221a44 !important; }
+
+  /* Highlighted place names: soft highlighter, not all-caps. */
+  .place-mention, html:not(.dark) .place-mention { background: #fff1a8 !important; color: #7a4f00 !important; border-radius: 6px !important; padding: 0 5px !important; text-transform: none !important; font-family: inherit !important; letter-spacing: 0 !important; text-decoration: none !important; font-weight: 700 !important; }
+  .dark .place-mention { background: #4a3d12 !important; color: #ffe08a !important; }
+
+  /* Inline notes. */
+  .inline-note, html:not(.dark) .inline-note { background: #fff7d6 !important; border-left: 5px solid #ff4d97 !important; color: #5a4a00 !important; border-radius: 14px !important; }
+  .dark .inline-note { background: #2a2152 !important; color: #ffe9a8 !important; border-left-color: #ff7eb6 !important; }
+
+  /* Progress bar: rainbow fill. */
+  .progress-bar, html:not(.dark) .progress-bar { background: rgba(124,92,255,0.15) !important; height: 8px !important; border-radius: 999px !important; }
+  .progress-fill, html:not(.dark) .progress-fill { background: linear-gradient(90deg,#ff6b6b,#ff4d97,#7c5cff) !important; }
+
+  /* Header font-size slider: white on the gradient. */
+  .font-scale-slider::-webkit-slider-runnable-track, html:not(.dark) .font-scale-slider::-webkit-slider-runnable-track { background: rgba(255,255,255,0.55) !important; height: 4px !important; border-radius: 999px !important; }
+  .font-scale-slider::-webkit-slider-thumb, html:not(.dark) .font-scale-slider::-webkit-slider-thumb { background: #fff !important; width: 16px !important; height: 16px !important; border-radius: 50% !important; margin-top: -6px !important; }
+  .font-scale-slider::-moz-range-track, html:not(.dark) .font-scale-slider::-moz-range-track { background: rgba(255,255,255,0.55) !important; }
+  .font-scale-slider::-moz-range-thumb, html:not(.dark) .font-scale-slider::-moz-range-thumb { background: #fff !important; border-radius: 50% !important; }
+
+  /* A little bounce on tap. */
+  .pill, .dayNavBtn, #claudePill, button { transition: transform 120ms ease !important; }
+  .pill:active, .dayNavBtn:active, #claudePill:active { transform: scale(0.94) !important; }
 </style>
 </head>
 <body class="bg-stone-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors">
