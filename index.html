@@ -494,12 +494,12 @@ const TRIP = [
   {
     day: 1, date: "2026-06-20", weekday: "Sat", phase: "montreal", city: "Montréal", flag: "🛬",
     title: "Montréal arrival — Old Montréal easy",
-    am: "Fly into Montréal-Trudeau (YUL). The 747 express bus or a taxi/Uber gets you downtown in ~30–40 min → drop bags at your Old Montréal / downtown hotel (bag drop before check-in is usually fine). First lunch to mark you've crossed into Canada: a wood-fired Montréal bagel or a Schwartz's smoked-meat sandwich.",
+    am: "Air Canada AC731 lands at Montréal-Trudeau (YUL) at 12:05. The 747 express bus or a taxi/Uber gets you downtown in ~30–40 min → drop bags at your Old Montréal / downtown hotel (bag drop before check-in is usually fine). First lunch to mark you've crossed into Canada: a wood-fired Montréal bagel or a Schwartz's smoked-meat sandwich.",
     pm: "Ease into Vieux-Montréal on foot — cobblestone lanes, street performers on Place Jacques-Cartier, and the Old Port waterfront. Step inside Notre-Dame Basilica (deep-blue-and-gold ceiling — a real wow for an 11-yo). Easy early dinner nearby, then a gentle first night; the big days come next.",
     sleep: "Old Montréal / downtown hotel (to book) — night 1/3",
     transit: "Grab an STM card at the airport or any métro station — a 3-day unlimited pass (~$22 CAD) covers métro + bus for the whole Montréal leg, and the 747 airport bus too.",
     flightPlaceholder: true,
-    flightTime: "afternoon",
+    flightTime: "12:05",
     destinations: [
       { name: "Vieux-Montréal (Old Montréal)", url: "https://www.mtl.org/en/what-to-do/neighbourhoods/old-montreal", note: "Cobblestone old town by the river — horse carriages, buskers on Place Jacques-Cartier, Europe-in-North-America streets you won't see in NYC. The easiest first-day wander." },
       { name: "Notre-Dame Basilica", url: "https://www.basiliquenotredame.ca/en/", note: "⛪ Deep-blue vaulted ceiling lit with gold stars — genuinely jaw-dropping for kids. Daytime self-guided visit (~$15 CAD adult); book online to skip the line." },
@@ -580,14 +580,16 @@ const TRIP = [
   {
     day: 6, date: "2026-06-25", weekday: "Thu", phase: "departure", city: "Québec City → home ✈️", flag: "✈️",
     title: "Québec City → home ✈️",
-    am: "One slow last morning in the old town — a final stroll down Petit-Champlain, a last maple treat or hot chocolate, and a souvenir or two from the Rue du Trésor artists' lane. Check out and keep the bags handy.",
-    pm: "Taxi out to Québec City Jean Lesage Airport (YQB), about 20–25 min from the old town, and fly home. (If your flight routes through Montréal or is a long afternoon, build in buffer for the small-airport security line.) Au revoir, Québec — welcome home.",
+    am: "One quick last morning — the flight out of Québec City is at 13:05, so keep it tight: a final stroll down Petit-Champlain, a last maple treat or hot chocolate, and maybe a print from the Rue du Trésor artists' lane. Check out, then taxi to the airport by ~11:30 (YQB is ~20 min away).",
+    pm: "Fly home via Montréal on Air Canada: AC1151 YQB 13:05 → Montréal (YUL) 13:59, then AC8640 YUL 15:30 → New York (LGA) 16:57. The U.S. preclearance happens during the ~1h31 Montréal connection, so have both passports and boarding passes ready. Au revoir, Québec — welcome home.",
     sleep: "Home",
-    flightTime: "midday",
-    transit: "Taxi or Uber from Vieux-Québec to YQB (~20–25 min, ~$40 CAD). YQB is small — 2h before an international/connecting departure is plenty. Confirm whether you fly direct or connect via Montréal.",
+    flightTime: "13:05",
+    transit: "Taxi or Uber from Vieux-Québec to YQB (~20 min, ~$40 CAD) — aim to arrive ~11:30 for the 13:05 departure. Connection at Montréal (YUL) is 1h31, which includes clearing U.S. preclearance — move briskly between gates.",
     flightPlaceholder: true,
     destinations: [
-      { name: "Québec City Jean Lesage Airport (YQB)", url: "https://www.aeroportdequebec.com/en", note: "✈️ Small, easy airport ~20–25 min from the old town. Direct U.S. routes are seasonal — many trips home connect through Montréal (YUL) or Toronto. Check your booking." },
+      { name: "AC1151 · Québec City → Montréal", url: "https://www.aircanada.com/", note: "✈️ YQB 13:05 → YUL 13:59 (Boeing 737 MAX 8, Business, seats 2A/2C). Booking ref BUTFBB. Be at the small YQB airport by ~11:30." },
+      { name: "AC8640 · Montréal → New York", url: "https://www.aircanada.com/", note: "✈️ YUL 15:30 → LGA 16:57 (Embraer E175, WiFi, seats 2D/2F). U.S. preclearance is at Montréal during your 1h31 connection — keep passports handy." },
+      { name: "Québec City Jean Lesage Airport (YQB)", url: "https://www.aeroportdequebec.com/en", note: "🛫 Small, easy airport ~20 min from the old town. Domestic departure to Montréal, so check-in is quick — but don't dawdle, the morning is short." },
       { name: "Rue du Trésor", url: "https://www.ruedutresor.qc.ca/en/", note: "🎨 A tiny lane near the Château packed with local artists selling prints and watercolours of Québec — a nicer last-morning souvenir than a fridge magnet." },
       { name: "Queues de Castor (BeaverTails)", url: "https://beavertails.com/", note: "🦫 One more fried-dough pastry with cinnamon-sugar or maple in Petit-Champlain before you go — the trip's edible send-off." },
     ],
@@ -633,7 +635,7 @@ const DEFAULT_CHECKLISTS = {
     "Book VIA Rail Montréal → Québec (viarail.ca) — Day 4, Tue Jun 23; reserve early for the best fare + seats together",
     "Book Montréal hotel — 3 nights, Jun 20–23 (Old Montréal / downtown)",
     "Book Québec City hotel — 2 nights, Jun 23–25 (Vieux-Québec)",
-    "Book flights — NYC → Montréal (YUL) out, Québec City (YQB) → home back",
+    "Check in online 24 h before each flight (Air Canada ref BUTFBB · AC731 out · AC1151 + AC8640 home)",
     "Reserve Aux Anciens Canadiens dinner (Day 5)",
     "Reserve Montréal Science Centre / IMAX timed tickets if you want a specific show",
     "Notify your bank of Canada travel + bring a no-foreign-fee card",
@@ -1238,22 +1240,26 @@ function flightsCardHtml() {
     <details class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 mb-4">
       <summary class="serif text-lg cursor-pointer select-none">✈️ Your flights</summary>
       <div class="text-sm mt-3 space-y-4">
+        <div class="text-xs opacity-60">Air Canada · Business Class · booking ref <b>BUTFBB</b> · Chihhao + Scarlett</div>
         <div>
           <div class="flex items-baseline justify-between gap-2">
             <div class="font-semibold">🛫 Outbound · New York → Montréal</div>
             <div class="text-xs opacity-60 whitespace-nowrap">Sat 20 Jun</div>
           </div>
-          <div class="opacity-80 mt-1">Flight to <b>Montréal-Trudeau (YUL)</b> — <span class="opacity-70">to book</span>.</div>
+          <div class="opacity-80 mt-1">Air Canada <b>AC731</b> · Airbus A220-300 · WiFi · seats <b>2A / 2C</b></div>
+          <div class="opacity-80"><b>LGA</b> dep <b>10:40</b> → <b>YUL Montréal-Trudeau</b> arr <b>12:05</b> (1h25, nonstop).</div>
           <div class="opacity-70 mt-1">Into town: the <b>747 express bus</b> or a taxi/Uber, ~30–40 min to downtown / Old Montréal.</div>
         </div>
         <div>
           <div class="flex items-baseline justify-between gap-2">
-            <div class="font-semibold">🛬 Return · Québec City → home</div>
+            <div class="font-semibold">🛬 Return · Québec City → New York</div>
             <div class="text-xs opacity-60 whitespace-nowrap">Thu 25 Jun</div>
           </div>
-          <div class="opacity-80 mt-1">Flight from <b>Québec City Jean Lesage (YQB)</b> — <span class="opacity-70">to book</span>. Many routes home connect via Montréal (YUL) or Toronto.</div>
-          <div class="opacity-70 mt-1">Taxi to YQB ~20–25 min from the old town; it's a small airport, so ~2 h ahead is plenty.</div>
-          <div class="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 p-2 mt-2"><b>🛂 Passports:</b> everyone needs their own valid passport for the Canada border — including your daughter. Check the expiry dates before you book.</div>
+          <div class="opacity-80 mt-1"><b>Leg 1 · AC1151</b> · Boeing 737 MAX 8 · seats <b>2A / 2C</b></div>
+          <div class="opacity-80"><b>YQB Québec City</b> dep <b>13:05</b> → <b>YUL Montréal</b> arr <b>13:59</b> (0h54).</div>
+          <div class="opacity-80 mt-2"><b>Leg 2 · AC8640</b> · Embraer E175 · WiFi · seats <b>2D / 2F</b></div>
+          <div class="opacity-80"><b>YUL Montréal</b> dep <b>15:30</b> → <b>LGA New York</b> arr <b>16:57</b> (1h27).</div>
+          <div class="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 p-2 mt-2"><b>⏱ Tight last morning:</b> YQB departs <b>13:05</b>, so be at the small Québec City airport by ~<b>11:30</b> (taxi ~20 min). The <b>U.S. preclearance happens during your Montréal connection</b> (1h31) — keep both passports + the AC731 itinerary handy.</div>
         </div>
       </div>
     </details>
