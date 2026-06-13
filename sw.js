@@ -1,4 +1,4 @@
-const CACHE = "canada26-v1";
+const CACHE = "canada26-v2";
 const SHELL = ["/gate.html", "/icon.svg", "/icon-180.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
