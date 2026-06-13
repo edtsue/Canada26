@@ -1561,7 +1561,7 @@ function inCityNowNextHtml(day) {
   return `
     <div class="rounded-2xl p-4 mb-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
       <div class="text-xs uppercase tracking-wider opacity-60">${label}</div>
-      <div class="text-[15px] mt-1">${focus ? highlightPlaces(focus, day) : "—"}</div>
+      ${bulletize(focus, day)}
     </div>
   `;
 }
@@ -1621,8 +1621,8 @@ function dayBodyHtml(day, opts = {}) {
   return `
     ${bookingsBlock}
     ${inlineNotesHtml(day)}
-    <div><span class="text-xs uppercase tracking-wider text-slate-500">☀️ AM</span><div class="text-[15px] mt-1">${day.am ? highlightPlaces(day.am, day) : "—"}</div></div>
-    <div><span class="text-xs uppercase tracking-wider text-slate-500">🌙 PM</span><div class="text-[15px] mt-1">${day.pm ? highlightPlaces(day.pm, day) : "—"}</div></div>
+    <div><span class="text-xs uppercase tracking-wider text-slate-500">☀️ AM</span>${bulletize(day.am, day)}</div>
+    <div><span class="text-xs uppercase tracking-wider text-slate-500">🌙 PM</span>${bulletize(day.pm, day)}</div>
     <div><span class="text-xs uppercase tracking-wider text-slate-500">🚄 Transit</span><div class="text-[15px] mt-1">${day.transit ? highlightPlaces(day.transit, day) : "—"}</div></div>
     ${day.trainBooked ? `
       <div class="rounded-xl p-3 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-300 dark:border-emerald-800/50">
@@ -3681,6 +3681,31 @@ function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
 function mapsUrl(name, city) {
   const q = encodeURIComponent(city ? `${name}, ${city}` : name);
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+
+// Split prose into sentences for bullet display. Protects common abbreviations
+// (St., U.S., etc.) so "St. Lawrence" doesn't break into two bullets. Uses a
+// plain lookahead (no lookbehind) for broad browser support.
+function splitSentences(text) {
+  if (!text) return [];
+  const abbr = ["St.", "Ste.", "Mt.", "Mtl.", "U.S.", "e.g.", "i.e.", "vs.", "No.", "approx."];
+  let t = text;
+  abbr.forEach((a, i) => { t = t.split(a).join("\u00a7A" + i + "\u00a7"); });
+  t = t.replace(/([.!?])\s+(?=[A-Z0-9(“"])/g, "$1\u00a7|\u00a7");
+  return t.split("\u00a7|\u00a7")
+    .map(s => { abbr.forEach((a, i) => { s = s.split("\u00a7A" + i + "\u00a7").join(a); }); return s.trim(); })
+    .filter(Boolean);
+}
+
+// Render am/pm/transit prose as a bulleted list (one bullet per sentence) so it's
+// easier to scan. Single-sentence text stays a plain line. Place names stay linked.
+function bulletize(text, day) {
+  if (!text) return `<div class="text-[15px] mt-1 opacity-50">—</div>`;
+  const items = splitSentences(text);
+  if (items.length <= 1) return `<div class="text-[15px] mt-1">${highlightPlaces(text, day)}</div>`;
+  return `<ul class="list-disc pl-5 space-y-1.5 text-[15px] mt-1 marker:text-red-400">${
+    items.map(s => `<li>${highlightPlaces(s, day)}</li>`).join("")
+  }</ul>`;
 }
 
 // Underline destination names + key city/hotel mentions inside prose text and turn
