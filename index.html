@@ -661,9 +661,8 @@ const TRIP = [
     am: "Check out, last Montréal bagel + coffee, and head to Gare Centrale for the VIA Rail train to Québec City (Gare du Palais), about 3h15 along the St. Lawrence. Bring a snack-and-activity bag for the train — the board game from yesterday earns its keep here. Free Wi-Fi onboard; watch the river roll by.",
     pm: "Arrive at Gare du Palais — a gorgeous château-style station — and settle into your Vieux-Québec hotel. Gentle first stroll through Upper Town to Château Frontenac and the Dufferin Terrace boardwalk for a golden-hour view over the river. First Québec treat: a BeaverTail (queue de castor) down in Petit-Champlain.",
     sleep: "Vieux-Québec hotel (to book) — night 1/2",
-    transit: "Book the VIA Rail leg ahead (corridor train, ~3h15). In Québec City the old town is compact and walkable — most of your days are on foot; taxis fill the gaps.",
-    trainBooking: { priority: "Book this leg soon", fare: "VIA Rail Economy ~$40–70 CAD", note: "One leg: Montréal (Gare Centrale) → Québec (Gare du Palais), ~3h15. Reserve on viarail.ca — pick a midday departure so you have a relaxed Montréal morning and arrive with the afternoon free. Discounts for kids; book early for the best fare." },
-    trainPlaceholder: true,
+    transit: "VIA Rail Montréal (Gare Centrale) → Québec (Gare du Palais), Business class, ~3h15. Get to Gare Centrale ~30 min ahead. In Québec City the old town is compact and walkable — most of your days are on foot; taxis fill the gaps.",
+    trainBooked: { service: "VIA Rail · Montréal → Québec City · Business", route: "Montréal Gare Centrale → Québec Gare du Palais (~3h15)", time: "Tue 23 Jun · check your VIA ticket for the exact departure time", fare: "Business · 2 passengers · $356.13 CAD", seat: "Seats 13A + 13B · extra carry-on included", ref: "CXVYA8" },
     destinations: [
       { name: "VIA Rail — Gare Centrale → Gare du Palais", url: "https://www.viarail.ca/en", note: "🚄 The scenic ~3h15 corridor train along the St. Lawrence. Comfy seats, big windows, free Wi-Fi, a snack car — the train ride is part of the fun, not just transport." },
       { name: "Gare du Palais", url: "https://www.viarail.ca/en/explore-our-destinations/stations/quebec/quebec-city", note: "🏰 Québec City's château-style train station (1915), designed like a mini Château Frontenac. A grand first impression on arrival." },
@@ -745,7 +744,7 @@ const DEFAULT_CHECKLISTS = {
   ].map(t => ({ text: t, checked: false })) },
   pretrip: { title: "📋 Pre-Trip To-Do", items: [
     "Verify BOTH passports are valid (kids need their own; check expiry)",
-    "Book VIA Rail Montréal → Québec (viarail.ca) — Day 4, Tue Jun 23; reserve early for the best fare + seats together",
+    "VIA Rail ✓ booked — Montréal → Québec, Tue Jun 23, Business, seats 13A+13B (booking CXVYA8)",
     "Montréal hotel ✓ booked — HONEYROSE, conf 90354857 (prepaid, non-refundable after Jun 14)",
     "Book Québec City hotel — 2 nights, Jun 23–25 (Vieux-Québec)",
     "Check in online 24 h before each flight (Air Canada ref BUTFBB · AC731 out · AC1151 + AC8640 home)",
@@ -761,7 +760,6 @@ const DEFAULT_CHECKLISTS = {
 // Time-critical bookings not in the pretrip checklist. Each has a per-id done flag.
 // `forDay` matches a TRIP day number; `leadDays` is how far ahead to book.
 const BOOKINGS_CATALOG = [
-  { id: "viarail",     title: "VIA Rail Montréal → Québec City",        forDay: 4, leadDays: 30, url: "https://www.viarail.ca/en", icon: "🚄" },
   { id: "anciens",     title: "Aux Anciens Canadiens dinner (Québec)",  forDay: 5, leadDays: 14, url: "https://auxancienscanadiens.qc.ca/en/", icon: "🍽" },
   { id: "science",     title: "Montréal Science Centre / IMAX tickets", forDay: 3, leadDays: 7,  url: "https://www.montrealsciencecentre.com/", icon: "🔬" },
   { id: "notredame",   title: "Notre-Dame Basilica timed entry",        forDay: 1, leadDays: 7,  url: "https://www.basiliquenotredame.ca/en/", icon: "⛪" },
@@ -1634,7 +1632,7 @@ function dayBodyHtml(day, opts = {}) {
           <div>🕘 ${day.trainBooked.time}</div>
           <div>🎫 ${day.trainBooked.fare}</div>
           <div>💺 ${day.trainBooked.seat}</div>
-          <div class="opacity-60 text-xs">Order ${day.trainBooked.ref} · in DB Navigator / My Trips</div>
+          <div class="opacity-60 text-xs">Booking ${day.trainBooked.ref} · in the VIA Rail app / My Trips</div>
         </div>
       </div>
     ` : ""}
