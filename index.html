@@ -1567,8 +1567,8 @@ function inCityNowNextHtml(day) {
 }
 
 function dayHeaderHtml(day) {
-  const flightBadge = day.flightPlaceholder ? `<span class="pill bg-white/20 text-white text-xs">✈️ Awaiting ticket upload</span>` : "";
-  const trainBadge = day.trainPlaceholder ? `<span class="pill bg-white/20 text-white text-xs">🚄 Awaiting train ticket</span>` : "";
+  const flightBadge = "";
+  const trainBadge = "";
   return `
     <div class="${PHASE_CLASS[day.phase]} p-5">
       <div class="flex items-start justify-between gap-3">
