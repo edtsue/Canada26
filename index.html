@@ -764,8 +764,10 @@ const DEFAULT_CHECKLISTS = {
     "Québec City hotel ✓ booked — Fairmont Le Château Frontenac, conf 1015198546 (Jun 23–25)",
     "Check in online 24 h before each flight (Air Canada ref BUTFBB · AC731 out · AC1151 + AC8640 home)",
     "Reserve Aux Anciens Canadiens dinner (Day 5)",
-    "Reserve Montréal Science Centre / IMAX timed tickets if you want a specific show",
+    "Reserve Biodôme tickets (Day 3) — timed entry; book online to skip the line",
     "Notify your bank of Canada travel + bring a no-foreign-fee card",
+    "Sort phones for Canada — a roaming add-on or a cheap eSIM for data",
+    "Check your travel insurance covers the trip",
     "Download Google Maps offline for Montréal + Québec City",
     "Screenshot all confirmations to a Photos album",
     "Share the itinerary with one person back home",
@@ -776,8 +778,8 @@ const DEFAULT_CHECKLISTS = {
 // `forDay` matches a TRIP day number; `leadDays` is how far ahead to book.
 const BOOKINGS_CATALOG = [
   { id: "anciens",     title: "Aux Anciens Canadiens dinner (Québec)",  forDay: 5, leadDays: 14, url: "https://auxancienscanadiens.qc.ca/en/", icon: "🍽" },
-  { id: "science",     title: "Montréal Science Centre / IMAX tickets", forDay: 3, leadDays: 7,  url: "https://www.montrealsciencecentre.com/", icon: "🔬" },
-  { id: "notredame",   title: "Notre-Dame Basilica timed entry",        forDay: 1, leadDays: 7,  url: "https://www.basiliquenotredame.ca/en/", icon: "⛪" },
+  { id: "biodome",     title: "Biodôme timed-entry tickets",            forDay: 3, leadDays: 7,  url: "https://espacepourlavie.ca/en/biodome", icon: "🐧" },
+  { id: "notredame",   title: "Notre-Dame Basilica timed entry",        forDay: 3, leadDays: 7,  url: "https://www.basiliquenotredame.ca/en/", icon: "⛪" },
 ];
 
 /* ========== SUPABASE ========== */
