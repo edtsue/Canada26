@@ -49,7 +49,7 @@
   .inline-note textarea { background: transparent; color: inherit; resize: vertical; outline: none; width: 100%; font-family: inherit; }
   .inline-note textarea::placeholder { color: rgba(120, 53, 15, 0.45); }
   .dark .inline-note textarea::placeholder { color: rgba(253, 230, 138, 0.45); }
-  body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  body { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
   .tab-active { color: #facc15; }
   .phase-montreal  { background: linear-gradient(135deg, #9f1239 0%, #be123c 100%); color: #fecdd3; }
   .phase-quebec    { background: linear-gradient(135deg, #075985 0%, #0369a1 100%); color: #bae6fd; }
@@ -402,8 +402,8 @@
   .pill.bg-slate-900, html:not(.dark) .pill.bg-slate-900 { background: linear-gradient(120deg,#ff4b3e,#e0241a) !important; color: #fff !important; border-color: transparent !important; }
 
   /* Bottom tab bar. */
-  #tabBar, html:not(.dark) #tabBar { backdrop-filter: blur(10px) !important; background: rgba(255,255,255,0.94) !important; border-top: 2px solid #ffd6d2 !important; box-shadow: 0 -6px 20px -12px rgba(213,43,30,0.4) !important; }
-  .dark #tabBar { background: rgba(26,8,7,0.94) !important; border-top: 2px solid #5a2620 !important; }
+  #tabBar, html:not(.dark) #tabBar { backdrop-filter: blur(10px) !important; background: rgba(255,255,255,0.94) !important; border-bottom: 2px solid #ffd6d2 !important; box-shadow: 0 6px 20px -12px rgba(213,43,30,0.4) !important; }
+  .dark #tabBar { background: rgba(26,8,7,0.94) !important; border-bottom: 2px solid #5a2620 !important; }
   .tab, html:not(.dark) .tab { color: #bf8d88 !important; }
   .tab-active, html:not(.dark) .tab-active { color: #d52b1e !important; }
 
@@ -483,6 +483,18 @@
   </div>
 </header>
 
+<!-- Top navigation tabs -->
+<nav id="tabBar" class="sticky top-[68px] z-20 glass border-b border-slate-200 dark:border-slate-800">
+  <div class="max-w-2xl mx-auto grid grid-cols-6">
+    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="today"><span class="text-xl">📅</span><span>Today</span></button>
+    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="days"><span class="text-xl">🗺️</span><span>Days</span></button>
+    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="guide"><span class="text-xl">🍴</span><span>Eat&amp;Shop</span></button>
+    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="kids"><span class="text-xl">🧸</span><span>Kids</span></button>
+    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="notes"><span class="text-xl">📝</span><span>Notes</span></button>
+    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="settings"><span class="text-xl">⚙️</span><span>Settings</span></button>
+  </div>
+</nav>
+
 <!-- Offline banner: shown when navigator.onLine is false. -->
 <div id="offlineBanner" class="hidden bg-yellow-400 text-slate-900 text-center text-sm py-2 px-3 font-bold tracking-wider uppercase border-b-2 border-pink-500">
   ✈ OFFLINE — reading from local cache. Your trip is saved.
@@ -502,13 +514,18 @@
     </div>
     <button id="exportTripPdfBtn" class="pill bg-white border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm">📄 Export PDF</button>
   </div>
-  <div id="dayNav" class="sticky top-[68px] z-20 -mx-4 px-4 py-2 glass border-b border-slate-200 dark:border-slate-800 overflow-x-auto scroll-hide flex gap-2"></div>
+  <div id="dayNav" class="sticky top-[128px] z-20 -mx-4 px-4 py-2 glass border-b border-slate-200 dark:border-slate-800 overflow-x-auto scroll-hide flex gap-2"></div>
   <div id="dayList" class="mt-4 space-y-3"></div>
 </section>
 
 <!-- EAT & SHOP TAB (merged Food + Shopping) -->
 <section id="view-guide" class="view py-4 hidden">
   <div id="guideBody"></div>
+</section>
+
+<!-- KIDS TAB -->
+<section id="view-kids" class="view py-4 hidden">
+  <div id="kidsBody"></div>
 </section>
 
 <!-- SHOPPING TAB (archived — no longer in bottom bar; merged into Eat & Shop) -->
@@ -560,7 +577,7 @@
 </div>
 
 <!-- Persistent Claude pill: opens the ask-anything modal. -->
-<div id="claudePillWrap" class="fixed right-4 z-40" style="bottom: calc(80px + 16px + env(safe-area-inset-bottom));">
+<div id="claudePillWrap" class="fixed right-4 z-40" style="bottom: calc(16px + env(safe-area-inset-bottom));">
   <button id="claudePill" class="rounded-full bg-slate-900 text-white dark:bg-yellow-400 dark:text-slate-900 px-4 py-3 shadow-lg flex items-center gap-2 text-sm font-medium" aria-label="Ask Claude">
     <span id="claudePillIcon">🤖</span>
     <span id="claudePillLabel">Ask Claude</span>
@@ -588,15 +605,6 @@
   </div>
 </div>
 
-<nav id="tabBar" class="fixed bottom-0 inset-x-0 z-40 glass border-t border-slate-200 dark:border-slate-800" style="padding-bottom: env(safe-area-inset-bottom);">
-  <div class="max-w-2xl mx-auto grid grid-cols-5">
-    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="today"><span class="text-xl">📅</span><span>Today</span></button>
-    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="days"><span class="text-xl">🗺️</span><span>Days</span></button>
-    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="guide"><span class="text-xl">🍴</span><span>Eat &amp; Shop</span></button>
-    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="notes"><span class="text-xl">📝</span><span>Notes</span></button>
-    <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="settings"><span class="text-xl">⚙️</span><span>Settings</span></button>
-  </div>
-</nav>
 </div><!-- /#appShell -->
 
 <script>
@@ -1132,7 +1140,7 @@ function saveLocal() {
 function uid() { return Math.random().toString(36).slice(2, 10); }
 
 /* ========== TAB ROUTING ========== */
-const VIEWS = ["today", "days", "guide", "notes", "settings"];
+const VIEWS = ["today", "days", "guide", "kids", "notes", "settings"];
 // Old tabs (food / shopping / tips) were merged/archived — send any saved pointer to a live tab.
 if (!VIEWS.includes(state.activeTab)) state.activeTab = "today";
 
@@ -1150,6 +1158,7 @@ function setView(name) {
   if (name === "today") renderToday();
   if (name === "days") renderDays();
   if (name === "guide") renderGuide();
+  if (name === "kids") renderKids();
   if (name === "notes") renderNotes();
   if (name === "settings") renderSettings();
   window.scrollTo({ top: 0, behavior: "instant" });
@@ -1168,6 +1177,7 @@ function rerenderActive() {
   if (name === "today") renderToday();
   if (name === "days") renderDays();
   if (name === "guide") renderGuide();
+  if (name === "kids") renderKids();
   if (name === "notes") renderNotes();
   if (name === "settings") renderSettings();
 }
@@ -2445,6 +2455,77 @@ function renderShopping() {
       }, 50);
     });
   });
+}
+
+/* ========== KIDS VIEW — kid stores + activities per city ========== */
+const KIDS_BY_CITY = {
+  "Montréal": {
+    phase: "montreal",
+    stores: [
+      { icon: "🎲", name: "Le Valet de Cœur", day: 3, url: "https://www.levalet.com/", note: "Board games + puzzles galore — staff help pick the right game for an 11-yo. Grab one for the train." },
+      { icon: "🧸", name: "Franc Jeu", day: 3, url: "https://www.francjeu.ca/", note: "Long-running Plateau toy store — wooden toys, science kits, crafts." },
+      { icon: "📚", name: "Renaud-Bray", day: 3, url: "https://www.renaud-bray.com/", note: "Big French/English bookstore with a strong kids' section, games and gifts." },
+      { icon: "📖", name: "Librairie Drawn & Quarterly", day: 3, url: "https://drawnandquarterly.com/", note: "Mile End indie bookshop — picture books and all-ages comics. Calm browse, Fairmount bagels nearby." },
+      { icon: "🍫", name: "Juliette & Chocolat", day: 2, url: "https://www.julietteetchocolat.com/en/", note: "Hot chocolate, brownies, chocolate crêpes — a guaranteed kid win." },
+    ],
+    activities: [
+      { icon: "🔬", name: "Montréal Science Centre", day: 3, url: "https://www.montrealsciencecentre.com/", note: "Hands-on exhibits + IMAX right in the Old Port. An easy half-day." },
+      { icon: "🚇", name: "RÉSO Underground City", day: 2, url: "https://www.mtl.org/en/what-to-do/heritage-and-architecture/underground-city-reso", note: "33 km of tunnels under downtown — explore like a maze. Rain-proof and free." },
+      { icon: "🎡", name: "La Grande Roue (Old Port)", day: 2, url: "https://www.lagranderoue.com/en/", note: "Big enclosed observation wheel over the river — reliable crowd-pleaser." },
+      { icon: "🪐", name: "Space for Life — Planetarium & Biodôme", day: 3, url: "https://espacepourlavie.ca/en", note: "Planetarium + live-ecosystem Biodôme + Insectarium at Olympic Park." },
+      { icon: "⛵", name: "Old Port — zip line & pedal boats", day: 1, url: "https://www.oldportofmontreal.com/en", note: "Zip line, pedal boats and open space to burn off travel-day energy." },
+      { icon: "🌳", name: "Mount Royal lookout", day: 2, url: "https://www.mtl.org/en/what-to-do/heritage-and-architecture/mount-royal-park", note: "The classic skyline view from Olmsted's mountain park." },
+      { icon: "🎢", name: "La Ronde amusement park", url: "https://www.laronde.com/en", note: "Six Flags park on Île Sainte-Hélène — coasters galore. A big optional day if you want thrills." },
+    ],
+  },
+  "Québec City": {
+    phase: "quebec",
+    stores: [
+      { icon: "🧸", name: "Benjo", day: 5, url: "https://www.benjo.ca/en/", note: "A giant toy + candy emporium with a little train circling the store. The trip's shopping highlight." },
+      { icon: "🍫", name: "Choco-Musée Érico", day: 5, url: "https://www.chocomusee.com/en/", note: "Chocolate shop + tiny museum on Rue Saint-Jean — watch it made, then taste." },
+      { icon: "📚", name: "Librairie Pantoute", day: 5, url: "https://www.librairiepantoute.com/", note: "Québec City's best-loved indie bookstore — French kids' books and local picture books." },
+      { icon: "🛍", name: "Quartier Petit-Champlain shops", day: 5, url: "https://www.quartierpetitchamplain.com/en/", note: "Cobblestone lane of little artisan, candy and toy shops, plus the funicular." },
+    ],
+    activities: [
+      { icon: "💦", name: "Montmorency Falls", day: 5, url: "https://www.sepaq.com/ct/pcm/index.dot?language_id=1", note: "Taller than Niagara — cable car up and a suspension bridge across the top. Great half-day." },
+      { icon: "🐟", name: "Aquarium du Québec", day: 5, url: "https://www.sepaq.com/ct/aqu/index.dot?language_id=1", note: "Sea lions, polar bears, walruses and a jellyfish gallery — ~15 min from the old town." },
+      { icon: "🎢", name: "Méga Parc (Galeries de la Capitale)", day: 5, url: "https://www.megaparc.com/en/", note: "Big INDOOR amusement park — Ferris wheel, rides, ice rink. The rainy-day backup." },
+      { icon: "🚠", name: "Old Québec Funicular", day: 5, url: "https://www.funiculaire.ca/en/", note: "The cliffside funicular linking Upper and Lower Town — a fun little ride with a view." },
+      { icon: "🌅", name: "Dufferin Terrace", day: 4, url: "https://www.thecanadianencyclopedia.ca/en/article/dufferin-terrace", note: "Boardwalk by the Château with street performers and huge river views." },
+      { icon: "🌳", name: "Plains of Abraham", day: 5, url: "https://www.theplainsofabraham.ca/en/", note: "Big grassy battlefield park with old cannons — room to run and picnic." },
+      { icon: "🛡", name: "La Citadelle — changing of the guard", day: 5, url: "https://www.lacitadelle.qc.ca/en/", note: "Star-shaped fortress; the summer changing-of-the-guard ceremony has a goat mascot." },
+    ],
+  },
+};
+
+function renderKids() {
+  const body = document.getElementById("kidsBody");
+  if (!body) return;
+  const item = (it) => `
+    <a href="${it.url}" target="_blank" rel="noopener noreferrer" class="block rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3">
+      <div class="flex items-start gap-3">
+        <span class="text-2xl leading-none">${it.icon}</span>
+        <div class="min-w-0">
+          <div class="serif text-[15px] leading-tight">${it.name} <span class="pill text-[10px]">${it.day ? "Day " + it.day : "optional"}</span></div>
+          <div class="text-sm opacity-80 mt-0.5">${it.note}</div>
+        </div>
+      </div>
+    </a>`;
+  const cityBlock = (city) => {
+    const d = KIDS_BY_CITY[city];
+    return `
+      <div class="space-y-3">
+        <div class="phase-${d.phase} rounded-2xl"><div class="serif">${city}</div></div>
+        <div><div class="text-xs uppercase tracking-wider opacity-60 mb-2 px-1">🧸 Kid stores</div><div class="space-y-2">${d.stores.map(item).join("")}</div></div>
+        <div><div class="text-xs uppercase tracking-wider opacity-60 mb-2 px-1">🎡 Activities</div><div class="space-y-2">${d.activities.map(item).join("")}</div></div>
+      </div>`;
+  };
+  body.innerHTML = `
+    <div class="rounded-2xl bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-800 mb-4">
+      <div class="serif text-lg mb-1">🧸 Just for kids</div>
+      <div class="text-sm opacity-70">Toy & book shops, candy, and hands-on activities in each city — tap a card to open it. "Day N" shows when it fits your plan.</div>
+    </div>
+    <div class="space-y-6">${Object.keys(KIDS_BY_CITY).map(cityBlock).join("")}</div>`;
 }
 
 /* ========== EAT & SHOP VIEW (merged Food + Shopping, by city) ========== */
