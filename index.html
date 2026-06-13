@@ -605,13 +605,15 @@ const TRIP = [
   {
     day: 1, date: "2026-06-20", weekday: "Sat", phase: "montreal", city: "Montréal", flag: "🛬",
     title: "Montréal arrival — Old Montréal easy",
-    am: "Air Canada AC731 lands at Montréal-Trudeau (YUL) at 12:05. The 747 express bus or a taxi/Uber gets you downtown in ~30–40 min → drop bags at your Old Montréal / downtown hotel (bag drop before check-in is usually fine). First lunch to mark you've crossed into Canada: a wood-fired Montréal bagel or a Schwartz's smoked-meat sandwich.",
+    am: "Air Canada AC731 lands at Montréal-Trudeau (YUL) at 12:05. The 747 express bus or a taxi/Uber gets you downtown in ~30–40 min → drop bags at the HONEYROSE Hotel (355 Boul. de Maisonneuve O, downtown — bag drop before 3pm check-in is usually fine). First lunch to mark you've crossed into Canada: a wood-fired Montréal bagel or a Schwartz's smoked-meat sandwich.",
     pm: "Ease into Vieux-Montréal on foot — cobblestone lanes, street performers on Place Jacques-Cartier, and the Old Port waterfront. Step inside Notre-Dame Basilica (deep-blue-and-gold ceiling — a real wow for an 11-yo). Easy early dinner nearby, then a gentle first night; the big days come next.",
-    sleep: "Old Montréal / downtown hotel (to book) — night 1/3",
-    transit: "Grab an STM card at the airport or any métro station — a 3-day unlimited pass (~$22 CAD) covers métro + bus for the whole Montréal leg, and the 747 airport bus too.",
+    sleep: "HONEYROSE Hotel · Downtown Montréal (1/3)",
+    hotelBooked: { name: "HONEYROSE Hotel, Montréal (Tribute Portfolio)", area: "355 Boul. de Maisonneuve Ouest · Downtown (métro Guy-Concordia / Lucien-L'Allier), steps from the RÉSO underground", dates: "Sat 20 Jun → Tue 23 Jun · 3 nights", ref: "Marriott Bonvoy conf 90354857 · Std room, 2 queen, city view · prepaid" },
+    transit: "Grab an STM card at the airport or any métro station — a 3-day unlimited pass (~$22 CAD) covers métro + bus for the whole Montréal leg, and the 747 airport bus too. The HONEYROSE is downtown, a couple of minutes from métro Guy-Concordia (Green line).",
     flightPlaceholder: true,
     flightTime: "12:05",
     destinations: [
+      { name: "HONEYROSE Hotel, Montréal", url: "https://www.marriott.com/en-us/hotels/yulhr-honeyrose-hotel-montreal-a-tribute-portfolio-hotel/overview/", note: "🏨 BOOKED. 355 Boul. de Maisonneuve O, downtown — an Art Deco–styled Tribute Portfolio hotel by métro Guy-Concordia, steps from the Underground City. Standard room, 2 queen beds, city view. Conf 90354857." },
       { name: "Vieux-Montréal (Old Montréal)", url: "https://www.mtl.org/en/what-to-do/neighbourhoods/old-montreal", note: "Cobblestone old town by the river — horse carriages, buskers on Place Jacques-Cartier, Europe-in-North-America streets you won't see in NYC. The easiest first-day wander." },
       { name: "Notre-Dame Basilica", url: "https://www.basiliquenotredame.ca/en/", note: "⛪ Deep-blue vaulted ceiling lit with gold stars — genuinely jaw-dropping for kids. Daytime self-guided visit (~$15 CAD adult); book online to skip the line." },
       { name: "Old Port of Montréal", url: "https://www.oldportofmontreal.com/en", note: "Riverfront promenade with a giant observation wheel (La Grande Roue), a zip line, and pedal boats — burn off the travel-day energy before dinner." },
@@ -625,7 +627,7 @@ const TRIP = [
     title: "Montréal: Underground City (RÉSO) + Old Port",
     am: "The headline 'not in NYC' experience: the RÉSO Underground City — 33 km of climate-controlled tunnels linking malls, métro stations, and food courts beneath downtown. Start at the Eaton Centre or Place Ville Marie and just explore; it's a hit with kids and rain-proof if June throws a shower. Pop up at Place Ville Marie for the Au Sommet observation deck (360° city view).",
     pm: "Back to the Old Port for the fun stuff — ride La Grande Roue (the big observation wheel), grab a hot-chocolate or a crêpe, and if the sun's out, taxi up to the Mount Royal lookout (Kondiaronk Belvédère) for the classic skyline view. Treats stop at Juliette & Chocolat on the way to dinner.",
-    sleep: "Old Montréal / downtown hotel (to book) — night 2/3",
+    sleep: "HONEYROSE Hotel · Downtown Montréal (2/3)",
     transit: "Métro day. The RÉSO connects right off the Green & Orange lines (McGill / Bonaventure / Place-des-Arts). Your STM pass covers everything.",
     destinations: [
       { name: "RÉSO — Underground City", url: "https://www.mtl.org/en/what-to-do/heritage-and-architecture/underground-city-reso", note: "🚇 33 km of underground walkways under downtown — shops, food courts, métro links. The trip's 'you can't do this in NYC' headline, and a perfect rainy-June backup. Free to wander." },
@@ -641,7 +643,7 @@ const TRIP = [
     title: "Montréal: Science Centre + toy & book run",
     am: "Hands-on science morning. The Montréal Science Centre sits right in the Old Port — interactive exhibits, a tech/maker zone, and an IMAX screen, all aimed squarely at curious kids. (Alternative if you'd rather go east: Space for Life at Olympic Park bundles the Planetarium, Biodôme, and Insectarium — pick one big thing, not both.)",
     pm: "Toy + book run — the trip's shopping heart. Le Valet de Cœur for board games and puzzles, Renaud-Bray for French/English books, and Drawn & Quarterly in Mile End for indie comics and kids' picture books. Snack your way through Jean-Talon Market on the way back (fresh berries, Québec cheese, a maple treat).",
-    sleep: "Old Montréal / downtown hotel (to book) — night 3/3",
+    sleep: "HONEYROSE Hotel · Downtown Montréal (3/3)",
     transit: "Science Centre is walkable in the Old Port. Jean-Talon Market + Mile End are an Orange/Blue line ride north — your STM pass covers it.",
     destinations: [
       { name: "Montréal Science Centre", url: "https://www.montrealsciencecentre.com/", note: "🔬 Old Port hands-on science museum — build-it exhibits, a tech zone, and IMAX. Reserve timed tickets online if you want a specific IMAX show. Easy half-day." },
@@ -744,7 +746,7 @@ const DEFAULT_CHECKLISTS = {
   pretrip: { title: "📋 Pre-Trip To-Do", items: [
     "Verify BOTH passports are valid (kids need their own; check expiry)",
     "Book VIA Rail Montréal → Québec (viarail.ca) — Day 4, Tue Jun 23; reserve early for the best fare + seats together",
-    "Book Montréal hotel — 3 nights, Jun 20–23 (Old Montréal / downtown)",
+    "Montréal hotel ✓ booked — HONEYROSE, conf 90354857 (prepaid, non-refundable after Jun 14)",
     "Book Québec City hotel — 2 nights, Jun 23–25 (Vieux-Québec)",
     "Check in online 24 h before each flight (Air Canada ref BUTFBB · AC731 out · AC1151 + AC8640 home)",
     "Reserve Aux Anciens Canadiens dinner (Day 5)",
