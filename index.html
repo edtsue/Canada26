@@ -376,7 +376,7 @@
   .glass, html:not(.dark) .glass { backdrop-filter: blur(10px) !important; background: rgba(255,245,244,0.85) !important; border-bottom: 1px solid rgba(213,43,30,0.18) !important; color: #2a1412 !important; }
   .dark .glass { background: rgba(26,8,7,0.82) !important; border-bottom: 1px solid #5a2620 !important; color: #ffece9 !important; }
   /* Top header bar only: bold flag-red gradient with white text. */
-  header.glass, html:not(.dark) header.glass { background: linear-gradient(120deg,#e1352b 0%,#b3201a 100%) !important; border-bottom: none !important; box-shadow: 0 8px 22px -12px rgba(213,43,30,0.5) !important; color: #fff !important; }
+  header.glass, html:not(.dark) header.glass { background: linear-gradient(120deg,#ff4b3e 0%,#e0241a 100%) !important; border-bottom: none !important; box-shadow: 0 8px 22px -12px rgba(213,43,30,0.45) !important; color: #fff !important; }
   header.glass h1 { color: #fff !important; }
   header.glass #clocks { color: rgba(255,255,255,0.9) !important; }
 
@@ -385,21 +385,21 @@
     border-radius: 22px !important; border: none !important; border-left: 10px solid rgba(255,255,255,0.92) !important;
     padding: 22px 22px !important; color: #fff !important; overflow: hidden; box-shadow: 0 14px 30px -16px rgba(0,0,0,0.35) !important;
   }
-  .phase-montreal { background: linear-gradient(125deg,#e63329 0%,#c41f17 100%) !important; }
-  .phase-quebec   { background: linear-gradient(125deg,#c41f17 0%,#8c1410 100%) !important; }
-  .phase-departure{ background: linear-gradient(125deg,#7a1510 0%,#3a0c0a 100%) !important; }
+  .phase-montreal { background: linear-gradient(125deg,#ff5448 0%,#ee2d1f 100%) !important; }
+  .phase-quebec   { background: linear-gradient(125deg,#fb3f33 0%,#d51f15 100%) !important; }
+  .phase-departure{ background: linear-gradient(125deg,#ff6a4d 0%,#e23a2a 100%) !important; }
   .phase-montreal::after, .phase-quebec::after, .phase-departure::after { display: none !important; }
   .phase-montreal .serif, .phase-quebec .serif, .phase-departure .serif { color: #fff !important; font-size: 1.6em !important; }
 
   /* Day-nav pills: rounded, red active state. */
   .dayNavBtn, html:not(.dark) .dayNavBtn { background: #ffffff !important; color: #2a1412 !important; border: 2px solid #ffd0cc !important; border-radius: 999px !important; padding: 8px 16px !important; }
   .dark .dayNavBtn { background: #2a1513 !important; color: #ffece9 !important; border-color: #5a2620 !important; }
-  .dayNavBtn.ring-2, html:not(.dark) .dayNavBtn.ring-2 { background: linear-gradient(120deg,#e1352b,#b3201a) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 8px 18px -8px rgba(213,43,30,0.5) !important; }
+  .dayNavBtn.ring-2, html:not(.dark) .dayNavBtn.ring-2 { background: linear-gradient(120deg,#ff4b3e,#e0241a) !important; color: #fff !important; border-color: transparent !important; box-shadow: 0 8px 18px -8px rgba(213,43,30,0.5) !important; }
 
   /* Generic pills. */
   .pill, html:not(.dark) .pill { background: #ffe1de !important; color: #c41f17 !important; border: 2px solid transparent !important; }
   .dark .pill { background: #3a1714 !important; color: #ff9b91 !important; }
-  .pill.bg-slate-900, html:not(.dark) .pill.bg-slate-900 { background: linear-gradient(120deg,#e1352b,#b3201a) !important; color: #fff !important; border-color: transparent !important; }
+  .pill.bg-slate-900, html:not(.dark) .pill.bg-slate-900 { background: linear-gradient(120deg,#ff4b3e,#e0241a) !important; color: #fff !important; border-color: transparent !important; }
 
   /* Bottom tab bar. */
   #tabBar, html:not(.dark) #tabBar { backdrop-filter: blur(10px) !important; background: rgba(255,255,255,0.94) !important; border-top: 2px solid #ffd6d2 !important; box-shadow: 0 -6px 20px -12px rgba(213,43,30,0.4) !important; }
@@ -408,7 +408,7 @@
   .tab-active, html:not(.dark) .tab-active { color: #d52b1e !important; }
 
   /* Ask-Claude floating pill. */
-  #claudePill, html:not(.dark) #claudePill { background: linear-gradient(120deg,#e1352b,#b3201a) !important; color: #fff !important; border: none !important; border-radius: 999px !important; font-family: 'Fredoka',sans-serif !important; letter-spacing: 0 !important; box-shadow: 0 12px 26px -8px rgba(213,43,30,0.6) !important; }
+  #claudePill, html:not(.dark) #claudePill { background: linear-gradient(120deg,#ff4b3e,#e0241a) !important; color: #fff !important; border: none !important; border-radius: 999px !important; font-family: 'Fredoka',sans-serif !important; letter-spacing: 0 !important; box-shadow: 0 12px 26px -8px rgba(213,43,30,0.6) !important; }
 
   /* Tip cards: rounded with a red accent edge. */
   .tip-treats, .tip-hands-on, .tip-shopping { border-top: 0 !important; border-left: 6px solid #ccc !important; border-radius: 16px !important; padding: 14px 16px !important; }
@@ -1026,7 +1026,7 @@ function defaultState() {
   }
   return {
     version: STATE_VERSION,
-    darkMode: true,
+    darkMode: false,
     darkDefaultApplied: true,
     activeTab: "today",
     interestProfile: ["treats", "hands-on", "shopping"],
@@ -1083,9 +1083,9 @@ function loadState() {
       emergency: parsed.emergency || fresh.emergency,
       extraDestinations: parsed.extraDestinations || {},
     };
-    if (!merged.darkDefaultApplied) {
-      merged.darkMode = true;
-      merged.darkDefaultApplied = true;
+    if (!merged.lightDefaultApplied) {
+      merged.darkMode = false;
+      merged.lightDefaultApplied = true;
     }
     // One-shot migration: replace the old verbose packing list with the ultralight one.
     if ((merged.packingListVersion || 1) < 2) {
