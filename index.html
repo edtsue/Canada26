@@ -871,7 +871,7 @@ async function pullRemote(opts = {}) {
   const { silent = false } = opts;
   if (!sb || !authedUser) return { ok: false };
   try {
-    const { data, error } = await sb.from("trip_state").select("data, updated_at").eq("user_id", authedUser.id).maybeSingle();
+    const { data, error } = await sb.from("canada_trip_state").select("data, updated_at").eq("user_id", authedUser.id).maybeSingle();
     if (error) { console.error("pull error", error); setSyncDot("error"); return { ok: false }; }
     if (!data) {
       setSyncDot("synced");
@@ -919,7 +919,7 @@ async function pushRemote(immediate) {
     setSyncDot("syncing");
     try {
       const ts = new Date().toISOString();
-      const { error } = await sb.from("trip_state").upsert({
+      const { error } = await sb.from("canada_trip_state").upsert({
         user_id: authedUser.id,
         data: state,
         updated_at: ts,
@@ -955,7 +955,7 @@ function flushPushBeacon() {
     const slimState = { ...state, uploads: [] };
     const body = JSON.stringify({ user_id: authedUser.id, data: slimState, updated_at: ts });
     if (body.length > 60_000) return; // refuse if even slim payload exceeds keepalive cap
-    fetch(`${SUPABASE_URL}/rest/v1/trip_state?on_conflict=user_id`, {
+    fetch(`${SUPABASE_URL}/rest/v1/canada_trip_state?on_conflict=user_id`, {
       method: "POST",
       keepalive: true,
       headers: {
@@ -3534,7 +3534,7 @@ function renderSettings() {
     const fetchRemoteInfo = async () => {
       if (!sb || !authedUser) return;
       try {
-        const { data, error } = await sb.from("trip_state").select("updated_at, data").eq("user_id", authedUser.id).maybeSingle();
+        const { data, error } = await sb.from("canada_trip_state").select("updated_at, data").eq("user_id", authedUser.id).maybeSingle();
         if (error) { diagStatus().textContent = "fetch error: " + error.message; return; }
         if (!data) { diagStatus().textContent = "no remote row yet"; return; }
         lastRemoteUpdatedAt = data.updated_at || null;

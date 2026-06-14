@@ -25,10 +25,10 @@ Push to `main` = prod. Set these env vars in the Vercel dashboard:
 
 Models: chat = `claude-haiku-4-5`, tips/replan = `claude-sonnet-4-6` (override via `ANTHROPIC_MODEL`).
 
-## ⚠️ Supabase note
-`index.html` still hardcodes **DEsolo26's** Supabase project. The app works fully
-offline on `localStorage` regardless, but magic-link cloud sync would share state
-with DEsolo26. Point it at a fresh Supabase project (`trip_state` table, RLS on
-`user_id == auth.uid()`) before relying on cross-device sync.
+## Supabase note
+Cloud sync (magic-link) is wired to a dedicated **`canada_trip_state`** table in the
+shared `dxrqgnvnkwffnhyzngii` project — RLS-locked to `user_id == auth.uid()`, so it
+never collides with the Berlin app's `trip_state`. The app also works fully offline on
+`localStorage` (`CANADA26_TRIP_HUB`); sign in only when you want cross-device sync.
 
 *Repurposed from DEsolo26 for a NYC → Montréal → Québec City family trip.*
