@@ -49,7 +49,7 @@
   .inline-note textarea { background: transparent; color: inherit; resize: vertical; outline: none; width: 100%; font-family: inherit; }
   .inline-note textarea::placeholder { color: rgba(120, 53, 15, 0.45); }
   .dark .inline-note textarea::placeholder { color: rgba(253, 230, 138, 0.45); }
-  body { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+  body { padding-top: var(--topbar-h, 124px); padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
   .tab-active { color: #facc15; }
   .phase-montreal  { background: linear-gradient(135deg, #9f1239 0%, #be123c 100%); color: #fecdd3; }
   .phase-quebec    { background: linear-gradient(135deg, #075985 0%, #0369a1 100%); color: #bae6fd; }
@@ -465,7 +465,8 @@
 </div>
 
 <div id="appShell">
-<header class="sticky top-0 z-30 glass border-b border-slate-200 dark:border-slate-800">
+<div id="topbar" class="fixed top-0 inset-x-0 z-30">
+<header class="glass border-b border-slate-200 dark:border-slate-800">
   <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
     <div class="min-w-0">
       <h1 class="serif text-2xl font-bold leading-none">Montréal → Québec City</h1>
@@ -484,7 +485,7 @@
 </header>
 
 <!-- Top navigation tabs -->
-<nav id="tabBar" class="sticky top-[68px] z-20 glass border-b border-slate-200 dark:border-slate-800">
+<nav id="tabBar" class="glass border-b border-slate-200 dark:border-slate-800">
   <div class="max-w-2xl mx-auto grid grid-cols-6">
     <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="today"><span class="text-xl">📅</span><span>Today</span></button>
     <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="days"><span class="text-xl">🗺️</span><span>Days</span></button>
@@ -494,6 +495,7 @@
     <button class="tab tap py-2 flex flex-col items-center text-xs" data-view="settings"><span class="text-xl">⚙️</span><span>Settings</span></button>
   </div>
 </nav>
+</div><!-- /#topbar -->
 
 <!-- Offline banner: shown when navigator.onLine is false. -->
 <div id="offlineBanner" class="hidden bg-yellow-400 text-slate-900 text-center text-sm py-2 px-3 font-bold tracking-wider uppercase border-b-2 border-pink-500">
@@ -514,7 +516,7 @@
     </div>
     <button id="exportTripPdfBtn" class="pill bg-white border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm">📄 Export PDF</button>
   </div>
-  <div id="dayNav" class="sticky top-[128px] z-20 -mx-4 px-4 py-2 glass border-b border-slate-200 dark:border-slate-800 overflow-x-auto scroll-hide flex gap-2"></div>
+  <div id="dayNav" class="sticky z-20 -mx-4 px-4 py-2 glass border-b border-slate-200 dark:border-slate-800 overflow-x-auto scroll-hide flex gap-2" style="top: var(--topbar-h, 124px)"></div>
   <div id="dayList" class="mt-4 space-y-3"></div>
 </section>
 
@@ -4216,6 +4218,18 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").catch((err) => console.warn("SW register failed", err));
   });
 }
+
+// Keep the fixed top bar's height in sync with a CSS var so content + the
+// day-strip offset stay correct (handles the font-size slider, rotation, etc.).
+(function () {
+  const tb = document.getElementById("topbar");
+  if (!tb) return;
+  const setH = () => document.documentElement.style.setProperty("--topbar-h", tb.offsetHeight + "px");
+  setH();
+  window.addEventListener("load", setH);
+  window.addEventListener("resize", setH);
+  if (window.ResizeObserver) new ResizeObserver(setH).observe(tb);
+})();
 </script>
 
 </body>
