@@ -755,20 +755,53 @@ const PHASE_CLASS = {
 };
 
 const DEFAULT_CHECKLISTS = {
-  packing: { title: "🧳 Packing list (parent + 11-yo)", items: [
-    "Both passports (Canada border — kids need their own!) · 1 no-foreign-fee card + 1 backup",
-    "Phones + charging cables (Canada uses US plugs — NO adapter needed)",
-    "Slim power bank for the train day",
-    "Light rain jackets + a warm layer each (cool Québec evenings)",
-    "Comfortable walking shoes — lots of cobblestones and hills",
-    "Daughter's train kit: snacks, a new toy/plushie, sketchbook, headphones",
-    "Reusable water bottles",
-    "Sunscreen + caps + sunglasses (June sun is strong)",
-    "A few layers + 1 nicer outfit each for the Aux Anciens Canadiens dinner",
-    "Prescription meds + mini first-aid (kids' pain reliever, bandaids)",
-    "A little CAD cash for market stalls + the Benjo candy wall",
-    "Small daypack for treats, souvenirs, and shed layers",
-  ].map(t => ({ text: t, checked: false })) },
+  packing: { title: "🧳 Packing list (you + daughter)", items: [
+    "## CLOTHING — pack for layers",
+    "T-shirts/tops (~1/day + spare each)",
+    "1–2 light sweaters or hoodies (cool evenings)",
+    "Long pants/jeans",
+    "Shorts",
+    "Packable rain jacket ×2 (non-negotiable)",
+    "Warm layer for the train (VIA runs cold)",
+    "Pajamas",
+    "Underwear & socks",
+    "## SHOES",
+    "Broken-in walking shoes (cobblestones!)",
+    "Sandals/flip-flops (pool)",
+    "## SWIM & ACTIVITY",
+    "Swimsuits ×2",
+    "Swim cover-up",
+    "Small daypack",
+    "Refillable water bottles",
+    "Sunscreen",
+    "Hats",
+    "Sunglasses",
+    "## PHOTOGRAPHY (Ricoh GR3)",
+    "GR3",
+    "Spare batteries ×2 (short battery life)",
+    "Charger",
+    "SD cards",
+    "Microfiber cloth",
+    "## FÊTE NATIONALE (Jun 23–24)",
+    "Something blue and/or white",
+    "## DOCUMENTS & MONEY",
+    "Passports ×2 (check expiry)",
+    "No-foreign-fee credit card",
+    "Some CAD cash",
+    "Travel/health insurance info",
+    "Prescriptions in original bottles",
+    "## TRAIN + KID KIT",
+    "Shows/games downloaded + headphones",
+    "Snacks",
+    "Power bank + chargers",
+    "## TOILETRIES & FIRST AID",
+    "Toiletries kit",
+    "Lip balm",
+    "Medications",
+    "Hand sanitizer",
+    "Blister bandages",
+    "Basic first-aid",
+  ].map(t => t.startsWith("## ") ? ({ text: t.slice(3), header: true }) : ({ text: t, checked: false })) },
   pretrip: { title: "📋 Pre-Trip To-Do", items: [
     "Verify BOTH passports are valid (kids need their own; check expiry)",
     "VIA Rail ✓ booked — Montréal → Québec, Tue Jun 23, Business, seats 13A+13B (booking CXVYA8)",
@@ -885,14 +918,14 @@ async function pullRemote(opts = {}) {
       const merged = { ...defaultState(), ...data.data, lastSaved: remoteTs };
       state = merged;
       // Apply one-shot migrations that loadState would normally run.
-      if ((state.packingListVersion || 1) < 2) {
+      if ((state.packingListVersion || 1) < 3) {
         const fresh = defaultState();
         state.checklists = state.checklists || {};
         state.checklists.packing = {
           title: fresh.checklists.packing.title,
           items: fresh.checklists.packing.items.map(i => ({ ...i })),
         };
-        state.packingListVersion = 2;
+        state.packingListVersion = 3;
       }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       applyDark();
@@ -1061,7 +1094,7 @@ function defaultState() {
     interestProfile: ["treats", "hands-on", "shopping"],
     cadUsd: 0.73,
     displayCurrency: "USD",
-    packingListVersion: 2,
+    packingListVersion: 3,
     inlineNotes: {},
     dayOverrides: {},
     bookingsDone: {},
@@ -1116,14 +1149,14 @@ function loadState() {
       merged.darkMode = false;
       merged.lightDefaultApplied = true;
     }
-    // One-shot migration: replace the old verbose packing list with the ultralight one.
-    if ((merged.packingListVersion || 1) < 2) {
+    // One-shot migration: roll out the latest default packing list (categorized, v3).
+    if ((merged.packingListVersion || 1) < 3) {
       merged.checklists = merged.checklists || {};
       merged.checklists.packing = {
         title: fresh.checklists.packing.title,
         items: fresh.checklists.packing.items.map(i => ({ ...i })),
       };
-      merged.packingListVersion = 2;
+      merged.packingListVersion = 3;
     }
     // One-shot: drop the Train Day + Solo Safety lists (removed to simplify Notes).
     if ((merged.checklistsTrimVersion || 0) < 1) {
@@ -1357,7 +1390,7 @@ function renderToday() {
 function preTripBannerHtml() {
   const dUntil = daysUntilStart();
   const packing = state.checklists?.packing;
-  const total = packing ? packing.items.length : 0;
+  const total = packing ? packing.items.filter(i => !i.header).length : 0;
   const done = packing ? packing.items.filter(i => i.checked).length : 0;
   const pct = total ? Math.round((done / total) * 100) : 0;
   return `
@@ -3039,7 +3072,7 @@ function checklistsHtml() {
     const list = state.checklists[k];
     if (!list) return "";
     const done = list.items.filter(i => i.checked).length;
-    const total = list.items.length;
+    const total = list.items.filter(i => !i.header).length;
     const pct = total ? Math.round((done / total) * 100) : 0;
     const collapsed = state.checklistsCollapsed?.[k] !== false; // default collapsed
     return `
@@ -3055,7 +3088,9 @@ function checklistsHtml() {
         </div>
         <div class="listBody px-4 pb-4 ${collapsed ? "hidden" : ""}">
           <div class="space-y-1">
-            ${list.items.map((i, idx) => `
+            ${list.items.map((i, idx) => i.header ? `
+              <div class="text-[11px] font-semibold uppercase tracking-wider opacity-50 pt-3 pb-1 first:pt-0">${i.text}</div>
+            ` : `
               <label class="flex items-start gap-2 cursor-pointer">
                 <input type="checkbox" data-list="${k}" data-idx="${idx}" class="checkItem mt-1" ${i.checked ? "checked" : ""} />
                 <span class="text-[15px] ${i.checked ? "line-through opacity-50" : ""}">${i.text}</span>
