@@ -785,7 +785,7 @@ const DEFAULT_CHECKLISTS = {
     "## FÊTE NATIONALE (Jun 23–24)",
     "Something blue and/or white",
     "## DOCUMENTS & MONEY",
-    "Passports ×2 (check expiry)",
+    "Passports ×2",
     "No-foreign-fee credit card",
     "Some CAD cash",
     "Travel/health insurance info",
@@ -810,7 +810,7 @@ const DEFAULT_CHECKLISTS = {
     "Check in online 24 h before each flight (Air Canada ref BUTFBB · AC731 out · AC1151 + AC8640 home)",
     "Reserve Aux Anciens Canadiens dinner (Day 5)",
     "Reserve Biodôme tickets (Day 3) — timed entry; book online to skip the line",
-    "Notify your bank of Canada travel + bring a no-foreign-fee card",
+    "Notify your bank of Canada travel (card itself is on the packing list)",
     "Sort phones for Canada — a roaming add-on or a cheap eSIM for data",
     "Check your travel insurance covers the trip",
     "Download Google Maps offline for Montréal + Québec City",
@@ -926,6 +926,15 @@ async function pullRemote(opts = {}) {
           items: fresh.checklists.packing.items.map(i => ({ ...i })),
         };
         state.packingListVersion = 3;
+      }
+      if ((state.checklistsTrimVersion || 0) < 2) {
+        const fix = (listKey, from, to) => {
+          const it = state.checklists?.[listKey]?.items?.find(i => i.text === from);
+          if (it) it.text = to;
+        };
+        fix("packing", "Passports ×2 (check expiry)", "Passports ×2");
+        fix("pretrip", "Notify your bank of Canada travel + bring a no-foreign-fee card", "Notify your bank of Canada travel (card itself is on the packing list)");
+        state.checklistsTrimVersion = 2;
       }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       applyDark();
@@ -1164,6 +1173,17 @@ function loadState() {
       if (Array.isArray(merged.checklistsOrder)) merged.checklistsOrder = merged.checklistsOrder.filter(k => k !== "train" && k !== "safety");
       if (merged.checklistsCollapsed) { delete merged.checklistsCollapsed.train; delete merged.checklistsCollapsed.safety; }
       merged.checklistsTrimVersion = 1;
+    }
+    // One-shot: trim packing/pretrip duplicates (passport expiry + the no-fee card live
+    // in one place each now). Patch item text in place so checked state is preserved.
+    if ((merged.checklistsTrimVersion || 0) < 2) {
+      const fix = (listKey, from, to) => {
+        const it = merged.checklists?.[listKey]?.items?.find(i => i.text === from);
+        if (it) it.text = to;
+      };
+      fix("packing", "Passports ×2 (check expiry)", "Passports ×2");
+      fix("pretrip", "Notify your bank of Canada travel + bring a no-foreign-fee card", "Notify your bank of Canada travel (card itself is on the packing list)");
+      merged.checklistsTrimVersion = 2;
     }
     return merged;
   } catch {
