@@ -3880,10 +3880,20 @@ function highlightPlaces(text, day) {
   if (day) {
     if (Array.isArray(day.destinations)) {
       for (const d of day.destinations) {
-        if (d && d.name) names.push(d.name);
+        if (!d || !d.name) continue;
+        names.push(d.name);
+        // Also match the short form used in prose: drop a trailing "(...)" qualifier
+        // or a trailing city tag ("… Montréal", "… de Québec") so "the Biodôme" or
+        // "Méga Parc" link to the right POI even when the full name isn't written out.
+        const short = d.name
+          .replace(/\s*\([^)]*\)\s*$/, "")
+          .replace(/\s*[—-]?\s*(?:de\s+)?(?:Montréal|Québec City|Québec)\s*$/i, "")
+          .trim();
+        if (short.length > 3 && short !== d.name) names.push(short);
       }
     }
-    if (day.city) names.push(day.city);
+    // Deliberately do NOT linkify the bare city name (e.g. "Montréal") — it appears
+    // all over the prose and would steal links from the actual points of interest.
     if (day.sleep) {
       const hotel = day.sleep.split(/[,(]/)[0].trim();
       if (hotel && hotel.length > 3) names.push(hotel);
