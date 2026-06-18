@@ -1,5 +1,15 @@
-const CACHE = "canada26-v4";
+const CACHE = "canada26-v5";
 const SHELL = ["/gate.html", "/icon.svg", "/icon-180.png", "/manifest.webmanifest"];
+
+// Cross-origin assets the app needs to look/work right (styling, fonts, libraries).
+// Pre-warmed on install so the app survives going offline immediately after installing,
+// not just after they've been fetched once during normal browsing.
+const WARM = [
+  "https://cdn.tailwindcss.com",
+  "https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap",
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
+  "https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js",
+];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -13,6 +23,9 @@ self.addEventListener("install", (e) => {
         const r = await fetch("/", { credentials: "same-origin" });
         if (r && r.ok && !r.redirected && r.status === 200) await c.put("/", r.clone());
       } catch {}
+      // Warm the cross-origin assets individually — one failure (or being offline) must not
+      // abort the whole install, so each is tolerated separately rather than via addAll.
+      await Promise.allSettled(WARM.map((u) => c.add(u)));
     }).then(() => self.skipWaiting())
   );
 });
