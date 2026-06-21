@@ -578,13 +578,53 @@
   </div>
 </div>
 
-<!-- Persistent Claude pill: opens the ask-anything modal. -->
-<div id="claudePillWrap" class="fixed right-4 z-40" style="bottom: calc(16px + env(safe-area-inset-bottom));">
+<!-- Persistent Claude pill + currency converter, stacked bottom-right. -->
+<div id="claudePillWrap" class="fixed right-4 z-40 flex flex-col items-end gap-2" style="bottom: calc(16px + env(safe-area-inset-bottom));">
+  <button id="fxPill" class="rounded-full bg-white text-slate-900 border border-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-700 px-4 py-2.5 shadow-lg flex items-center gap-2 text-sm font-medium" aria-label="CAD to USD converter">
+    <span>💱</span>
+    <span>CAD⇄USD</span>
+  </button>
   <button id="claudePill" class="rounded-full bg-slate-900 text-white dark:bg-yellow-400 dark:text-slate-900 px-4 py-3 shadow-lg flex items-center gap-2 text-sm font-medium" aria-label="Ask Claude">
     <span id="claudePillIcon">🤖</span>
     <span id="claudePillLabel">Ask Claude</span>
   </button>
 </div>
+
+<!-- CAD ⇄ USD converter: live two-way conversion using the saved reference rate. -->
+<div id="fxModal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="bg-white dark:bg-slate-900 w-full sm:max-w-sm flex flex-col rounded-t-2xl sm:rounded-2xl shadow-2xl">
+    <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="serif text-lg">💱 CAD ⇄ USD</h3>
+      <button id="fxCloseBtn" class="tap text-xl opacity-70 hover:opacity-100" aria-label="Close">✕</button>
+    </div>
+    <div class="p-4 space-y-3">
+      <label class="block">
+        <span class="text-xs uppercase tracking-wider text-slate-500">🇨🇦 Canadian dollars</span>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-lg font-semibold w-8 text-right">C$</span>
+          <input id="fxCad" inputmode="decimal" autocomplete="off" class="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-lg" placeholder="0.00" />
+        </div>
+      </label>
+      <div class="text-center text-slate-400 leading-none">⇅</div>
+      <label class="block">
+        <span class="text-xs uppercase tracking-wider text-slate-500">🇺🇸 US dollars</span>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-lg font-semibold w-8 text-right">$</span>
+          <input id="fxUsd" inputmode="decimal" autocomplete="off" class="flex-1 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-lg" placeholder="0.00" />
+        </div>
+      </label>
+      <div class="flex flex-wrap gap-1.5 justify-center pt-1">
+        <button class="fxQuick pill bg-slate-100 dark:bg-slate-800 text-sm" data-cad="5">C$5</button>
+        <button class="fxQuick pill bg-slate-100 dark:bg-slate-800 text-sm" data-cad="10">C$10</button>
+        <button class="fxQuick pill bg-slate-100 dark:bg-slate-800 text-sm" data-cad="20">C$20</button>
+        <button class="fxQuick pill bg-slate-100 dark:bg-slate-800 text-sm" data-cad="50">C$50</button>
+        <button class="fxQuick pill bg-slate-100 dark:bg-slate-800 text-sm" data-cad="100">C$100</button>
+      </div>
+      <div id="fxRateLine" class="text-xs opacity-60 text-center"></div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Ask Claude modal: bottom-sheet chat. Input pinned to bottom; conversation scrolls above. -->
 <div id="askModal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -3695,6 +3735,32 @@ function closeAsk() {
   document.getElementById("askModal").classList.add("hidden");
 }
 
+// CAD ⇄ USD converter. Uses the saved reference rate (state.cadUsd = USD per CAD),
+// the same rate the Spend tab uses; editable in Settings.
+function fxRecalc(from) {
+  const rate = state.cadUsd || 0.73;
+  const cadEl = document.getElementById("fxCad");
+  const usdEl = document.getElementById("fxUsd");
+  if (!cadEl || !usdEl) return;
+  if (from === "cad") {
+    const v = parseFloat(cadEl.value);
+    usdEl.value = isFinite(v) ? (v * rate).toFixed(2) : "";
+  } else {
+    const v = parseFloat(usdEl.value);
+    cadEl.value = isFinite(v) ? (v / rate).toFixed(2) : "";
+  }
+}
+function openFx() {
+  const rate = state.cadUsd || 0.73;
+  document.getElementById("fxModal").classList.remove("hidden");
+  const rl = document.getElementById("fxRateLine");
+  if (rl) rl.textContent = `1 CAD = ${rate.toFixed(3)} USD · 1 USD = ${(1 / rate).toFixed(3)} CAD · edit rate in Settings`;
+  setTimeout(() => { const i = document.getElementById("fxCad"); if (i) i.focus(); }, 40);
+}
+function closeFx() {
+  document.getElementById("fxModal").classList.add("hidden");
+}
+
 function renderAskBody() {
   const body = document.getElementById("askBody");
   if (!body) return;
@@ -3837,6 +3903,17 @@ async function sendAsk() {
 }
 
 document.getElementById("claudePill").addEventListener("click", openAsk);
+document.getElementById("fxPill").addEventListener("click", openFx);
+document.getElementById("fxCloseBtn").addEventListener("click", closeFx);
+document.getElementById("fxModal").addEventListener("click", (e) => {
+  if (e.target.id === "fxModal") closeFx();
+});
+document.getElementById("fxCad").addEventListener("input", () => fxRecalc("cad"));
+document.getElementById("fxUsd").addEventListener("input", () => fxRecalc("usd"));
+document.querySelectorAll(".fxQuick").forEach(b => b.addEventListener("click", () => {
+  document.getElementById("fxCad").value = b.dataset.cad;
+  fxRecalc("cad");
+}));
 document.getElementById("askCloseBtn").addEventListener("click", closeAsk);
 document.getElementById("askModal").addEventListener("click", (e) => {
   if (e.target.id === "askModal") closeAsk();
